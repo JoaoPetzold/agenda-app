@@ -1,4 +1,4 @@
-import {createContext, useContext } from 'react';
+import { createContext, useContext } from 'react';
 
 export enum Theme {
     Light = 'Light',
@@ -71,13 +71,17 @@ export const DarkColors : { [key : string] : string } = {
     cContrast:  '#FFFFFF'  
 }; 
 
+export const Color = (theme : Theme, color : Colors) => {
+    return theme === Theme.Light ? LightColors[color] : DarkColors[color];
+}
+
 interface IThemeContext {
     theme : Theme;
     setTheme: (theme: Theme) => void;
 };
 
 const defaultValue = {
-    theme : Theme.Light,
+    theme : Theme.Dark,
     setTheme: (theme : Theme) => console.warn('faltando theme provider')
 };
 

@@ -1,10 +1,13 @@
 import React from 'react';
 import './App.scss';
+import { Background } from './components/UI';
 import Agenda from './pages/Agenda';
 
 function App() {
     return (
-        <Agenda></Agenda>
+        <Background>
+            <Agenda></Agenda>
+        </Background>
     );
 }
 
