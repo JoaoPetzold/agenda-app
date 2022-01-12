@@ -81,6 +81,8 @@ export const CalendarioContainer = styled.div<ColorProps>`
     width: 100%;
     height: 100%;
 
+    margin-left: 1rem;
+
     .react-calendar {
         height: 100%;
 

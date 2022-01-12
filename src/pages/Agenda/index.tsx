@@ -19,7 +19,7 @@ const Agenda = () => {
         {
             CD_AGENDA: 2,
             AGENDA: "Trabalho",
-            COR: "Green"
+            COR: "Blue"
         }
     ];
 
