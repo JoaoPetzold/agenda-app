@@ -1,10 +1,18 @@
 import styled from "styled-components";
 import { Theme, Colors, Color } from "../../contexts/ThemeContext";
-import { rgba } from 'polished';
+import { rgba, animation } from 'polished';
 
-interface ColorProps {
+interface screenPosition {
+    left: number;
+    top: number;
+}
+
+interface StyledProps {
+    idElement?: string;
     theme: Theme;
     color?: Colors;
+    active?: Boolean;
+    screenPos?: screenPosition;
 };
 
 export const Background = styled.div`
@@ -20,7 +28,7 @@ export const Background = styled.div`
     background-size: cover;
 `;
 
-export const ButtonIconedCircle = styled.button<ColorProps>`
+export const ButtonCircle = styled.button<StyledProps>`
     width: 2.2rem;
     height: 2.2rem;
 
@@ -28,7 +36,6 @@ export const ButtonIconedCircle = styled.button<ColorProps>`
     border: none;
     font-size: 1.2rem;
     text-align: center;
-
     border-radius: 5rem;
 
     svg {
@@ -40,11 +47,44 @@ export const ButtonIconedCircle = styled.button<ColorProps>`
 
     &:hover {
         cursor: pointer;
+        box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(Color(props.theme, Colors.Blue), 0.15)};  
+    }
+    &:active {
+        background-color: ${(props) => Color(props.theme, Colors.Gray1)};
+
+        svg {
+            color: ${Color(Theme.Light, Colors.Contrast)};
+        }
     }
 `;
 
-// ---- Agenda ---- //
-export const AgendaContainer = styled.div<ColorProps>`
+export const DropDown = styled.div<StyledProps>`
+    ${(props) => props.active ? 
+        `
+            display: inline-block;
+            position: absolute;
+            z-index: 1;
+        `
+    : 
+        `
+            display: none;
+        `
+    };
+
+    width: 14rem;
+    height: 14rem;
+
+    left: calc(${(props) => props.screenPos!?.left}px - 7rem);
+    top: calc(${(props) => props.screenPos!?.top}px - 14.25rem);
+
+    background-color: ${(props) => rgba(Color(props.theme, Colors.Gray6), 0.99)};
+    box-shadow: 0px 0px 0.4rem 0.1rem rgba(0,0,0,0.15);
+    border-radius: 0.5rem; 
+`;
+
+// ---- Agenda ---- // 
+    // ---- Container 
+export const AgendaContainer = styled.div<StyledProps>`
     width: 65%;
     height: 65%;
     backdrop-filter: blur(1rem);
@@ -56,13 +96,13 @@ export const AgendaContainer = styled.div<ColorProps>`
     }
 `;
 
-export const AgendaBox = styled.div<ColorProps>`
+export const AgendaBox = styled.div<StyledProps>`
     display: grid;
     grid-template-columns: 35% auto;
     grid-template-rows: 90% auto;
     grid-template-areas: 
         "c a"
-        "n a";
+        "n ec";
 
     width: 100%;
     height: 100%;
@@ -75,8 +115,8 @@ export const AgendaBox = styled.div<ColorProps>`
         grid-template-columns: 40% auto;
     }
 `;
-
-export const CalendarioContainer = styled.div<ColorProps>`
+    // --- Calendario ---- //
+export const CalendarioContainer = styled.div<StyledProps>`
     grid-area: c;
     width: 100%;
     height: 100%;
@@ -191,27 +231,41 @@ export const CalendarioContainer = styled.div<ColorProps>`
         }  
     }
 `;
-
-export const AreaContainer = styled.div<ColorProps>`
+    // ---- Fim Calendario ---- //
+    // ---- Eventos ---- //
+export const AreaContainer = styled.div<StyledProps>`
     grid-area: a;
 
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
 
     padding: 1.5rem 0;
+    padding-right: 1rem;
 
     width: 100%;
-    height: 100%;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
 `;
 
-export const EventContainer = styled.div<ColorProps>`
+export const EventContainer = styled.div<StyledProps>`
+    ${(props) => props.active ? 
+        `
+            width: 90%;
+            height: 15rem;
+        `
+    : 
+        `
+            width: 90%;
+            height: 3.5rem;
+        `
+    }
+
     display: flex;
     align-items: center;
-
-    width: 92%;
-    height: 12%;
     margin: 0.5rem 0;
 
     box-shadow: 0px 0px 0.4rem 0.1rem rgba(0,0,0,0.15);
@@ -219,9 +273,43 @@ export const EventContainer = styled.div<ColorProps>`
 
     color: ${(props) => Color(props.theme, Colors.Contrast!)};
     background-color: ${(props) => rgba(Color(props.theme, props.color!), 0.9)};
+
+    &:active {
+        ${(props) => props.active ? 
+            animation(['scale-close', '0.4s', 'cubic-bezier(0.390, 0.575, 0.565, 1.000)', 'both'])
+        :
+            animation(['scale-open', '0.4s', 'cubic-bezier(0.390, 0.575, 0.565, 1.000)', 'both'])
+        };
+    };
+
+    &:hover {
+        cursor: pointer;
+        box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(Color(props.theme, Colors.Blue), 0.15)};  
+    }
+
+    @keyframes scale-open {
+        0% {
+            transform:scaleY(1);
+            transform-origin:100% 0;
+        }
+        100% {
+            transform:scaleY(4);
+            transform-origin:100% 0;
+        }
+    }
+    @keyframes scale-close {
+        0% {
+            transform:scaleY(1);
+            transform-origin:100% 0;
+        }
+        100% {
+            transform:scaleY(0.25);
+            transform-origin:100% 0;
+        }
+    }
 `;
 
-export const EventGroup = styled.div<ColorProps>`
+export const EventGroup = styled.div<StyledProps>`
     width: 0.5rem;
     height: 100%;
 
@@ -238,7 +326,18 @@ export const EventTime = styled.span`
     margin: 0 1rem 0 auto;
 `;
 
-export const NavbarContainer = styled.div<ColorProps>`
+export const EventControls = styled.div<StyledProps>`
+    grid-area: ec;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    border-radius: 0 0 0 0.5rem;
+`;
+    // ---- Fim Eventos ---- //
+export const NavbarContainer = styled.div<StyledProps>`
     grid-area: n;
     display: flex;
     justify-content: space-evenly;

@@ -73,3 +73,13 @@ a {
         font-size: 87.5%;
     }
 }
+
+::-webkit-scrollbar {
+    width: 0.25rem;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: transparent;
+}
