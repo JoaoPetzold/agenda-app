@@ -1,28 +1,26 @@
-import { createContext } from 'react';
-
-export interface ColorScheme {
-    Red     : string,
-    Orange  : string,
-    Yellow  : string,
-    Green   : string,
-    Mint    : string,
-    Teal    : string,
-    Cyan    : string,
-    Blue    : string,
-    Indigo  : string,
-    Purple  : string,
-    Pink    : string,
-    Brown   : string,
-    Gray1   : string,
-    Gray2   : string,
-    Gray3   : string,
-    Gray4   : string,
-    Gray5   : string,
-    Gray6   : string,
-    Contrast : string
+export enum Colors {
+    Red     = 'Red',
+    Orange  = 'Orange',
+    Yellow  = 'Yellow',
+    Green   = 'Green',
+    Mint    = 'Mint',
+    Teal    = 'Teal',
+    Cyan    = 'Cyan',
+    Blue    = 'Blue',
+    Indigo  = 'Indigo',
+    Purple  = 'Purple',
+    Pink    = 'Pink',
+    Brown   = 'Brown',
+    Gray1   = 'Gray1',
+    Gray2   = 'Gray2',
+    Gray3   = 'Gray3',
+    Gray4   = 'Gray4',
+    Gray5   = 'Gray5',
+    Gray6   = 'Gray6',
+    Contrast = 'Contrast'
 }
 
-export const ColorSchemeLight : ColorScheme = {
+export const ColorSchemeLight = {
     Red:       '#ff3b30',
     Orange:    '#ff9500',
     Yellow:    '#ffcc00',
@@ -44,7 +42,7 @@ export const ColorSchemeLight : ColorScheme = {
     Contrast:  '#1D1D1F'
 }
 
-export const ColorSchemeDark : ColorScheme = {
+export const ColorSchemeDark = {
     Red:       '#FF453A',
     Orange:    '#FF9F0A',
     Yellow:    '#FFD60A',
@@ -65,18 +63,3 @@ export const ColorSchemeDark : ColorScheme = {
     Gray6:     '#1C1C1E',
     Contrast:  '#FFFFFF' 
 }
-
-
-
-export interface IThemeContext {
-    themeColor : ColorScheme;
-    setTheme: (themeColor: ColorScheme) => void;
-};
-
-const defaultValue = {
-    themeColor : ColorSchemeLight,
-    setTheme: (themeColor : ColorScheme) => console.warn('faltando theme provider')
-};
-
-export const ThemeContext = createContext<IThemeContext>(defaultValue);
-// export const UseTheme = () => useContext(ThemeContext);

@@ -3,8 +3,9 @@ import Calendar from 'react-calendar';
 import { AgendaContainer, CalendarioContainer, AgendaBox, NavbarContainer, ButtonCircle, AreaContainer, EventContainer, EventGroup, EventTitle, EventTime, EventControls } from '../../components/UI';
 import { ButtonCircleDropdown } from '../../components/UI/buttons';
 import styles from './styles.module.scss';
-import { ThemeContext, Colors, Theme } from '../../contexts/ThemeContext';
-import { FaUserAlt, FaMoon, FaSun, FaPlus } from 'react-icons/fa';
+import { ThemeProvider } from 'styled-components';
+import { Colors, ColorSchemeLight, ColorSchemeDark } from '../../components/UI/color'
+import { FaUserAlt, FaMoon, FaSun, FaPlus, FaDoorOpen, FaRegAddressBook } from 'react-icons/fa';
 import { format } from 'date-fns';
 
 const Agendas = [
@@ -45,6 +46,7 @@ const EventosDia = [
         DESCRICAO: "Fulano de Tal",
         DATA: "2022-01-11T13:00:00Z"
     },
+    
     {
         CD_EVENTO: 4,
         CD_AGENDA: 1,
@@ -85,44 +87,56 @@ const EventosDia = [
         DESCRICAO: "Lembrar de pedir para trocar o óleo",
         DATA: "2022-01-11T15:30:00Z"
     },
+    {
+        CD_EVENTO: 9,
+        CD_AGENDA: 1,
+        CD_USUARIO: 1,
+        EVENTO: "Oficina Mecânica",
+        DESCRICAO: "Lembrar de pedir para trocar o óleo",
+        DATA: "2022-01-11T15:30:00Z"
+    },
+    {
+        CD_EVENTO: 10,
+        CD_AGENDA: 1,
+        CD_USUARIO: 1,
+        EVENTO: "Oficina Mecânica",
+        DESCRICAO: "Lembrar de pedir para trocar o óleo",
+        DATA: "2022-01-11T15:30:00Z"
+    },
 ];
 
 const Agenda = () => {
-    const [theme, setTheme] = useState<Theme>(Theme.Light);
+    const [isDarkTheme, setIsDarkTheme] = useState<Boolean>(false);
     const [valorData, setValorData] = useState<Date>(new Date());
     const [flippedIndex, setFlippedIndex] = useState<number>(-1);
     const [toggleUserMenu, setToggleUserMenu] = useState<Boolean>(false);
 
     const toggleFlippedIndex = (cd_evento : number) => {
-        setFlippedIndex(flippedIndex === cd_evento ? -1 : cd_evento)
+        setFlippedIndex(flippedIndex === cd_evento ? -1 : cd_evento);
     };
 
     const colorGroup = (cd_agenda : number) => {
         return Agendas.find(a => a.CD_AGENDA === cd_agenda)?.COR as keyof typeof Colors
     }
 
-    const changeTheme = () => {
-        setTheme(theme === Theme.Light ? Theme.Dark : Theme.Light)
-    };
-
     const MenuUser = [
         {
             idEvent: "agendas",
             caption: "Minhas Agendas",
-            icon: <FaMoon />
+            icon: <FaRegAddressBook />
         },
         {
             idEvent: "sair",
-            caption: "Sair da conta",
-            icon: <FaSun />
+            caption: "Encerrar Sessão",
+            icon: <FaDoorOpen />
         }
     ];
 
     return (
-        <ThemeContext.Provider value={{ theme, setTheme }}>
-            <AgendaContainer theme={theme}>
-                <AgendaBox theme={theme}>
-                    <CalendarioContainer theme={theme}>
+        <ThemeProvider theme={isDarkTheme ? ColorSchemeDark : ColorSchemeLight}>
+            <AgendaContainer>
+                <AgendaBox>
+                    <CalendarioContainer>
                         <Calendar 
                             className={styles.reactCalendar}
                             value={valorData} 
@@ -131,22 +145,22 @@ const Agenda = () => {
                             formatShortWeekday={(Locale, value) => ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'][value.getDay()]}
                         />
                     </CalendarioContainer>
-
-                    <NavbarContainer theme={theme}>
-                        <ButtonCircleDropdown idElement={"btn-user"} theme={theme} color={theme === Theme.Light ? Colors.Gray1 : Colors.Gray3} items={MenuUser} active={toggleUserMenu} onClick={() => setToggleUserMenu(!toggleUserMenu)}>
+                    {/* active={toggleUserMenu} onClick={() => setToggleUserMenu(!toggleUserMenu)} */}
+                    <NavbarContainer>
+                        <ButtonCircleDropdown idElement={"btn-user"} colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6} items={MenuUser} >
                             <FaUserAlt />
                         </ButtonCircleDropdown>
 
-                        <ButtonCircle theme={theme} color={theme === Theme.Light ? Colors.Gray1 : Colors.Gray3} onClick={() => changeTheme()}>
-                            {theme === Theme.Light ? <FaMoon /> : <FaSun />}
+                        <ButtonCircle colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6} onClick={() => setIsDarkTheme(!isDarkTheme)}>
+                            {isDarkTheme ? <FaMoon /> : <FaSun />}
                         </ButtonCircle>
                     </NavbarContainer>
 
-                    <AreaContainer theme={theme}>
+                    <AreaContainer>
                         { 
                             EventosDia.map(item => 
-                                <EventContainer key={item.CD_EVENTO} theme={theme} color={Colors.Gray6} onClick={() => toggleFlippedIndex(item.CD_EVENTO)} active={flippedIndex === item.CD_EVENTO}>
-                                    <EventGroup theme={theme} color={Colors[colorGroup(item.CD_AGENDA)]} />
+                                <EventContainer key={item.CD_EVENTO} colorx={Colors.Gray6} onClick={() => toggleFlippedIndex(item.CD_EVENTO)} active={flippedIndex === item.CD_EVENTO}>
+                                    <EventGroup colorx={Colors[colorGroup(item.CD_AGENDA)]} />
                                     <EventTitle>{item.EVENTO}</EventTitle>
                                     <EventTime>{format(new Date(item.DATA), 'hh:mm')}</EventTime>
                                 </EventContainer>
@@ -154,14 +168,14 @@ const Agenda = () => {
                         }
                     </AreaContainer>
 
-                    <EventControls theme={theme}>
-                        <ButtonCircle theme={theme} color={theme === Theme.Light ? Colors.Gray1 : Colors.Gray3}>
+                    <EventControls>
+                        <ButtonCircle colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6}>
                             <FaPlus />
                         </ButtonCircle>
                     </EventControls>
                 </AgendaBox>
             </AgendaContainer>
-        </ThemeContext.Provider>
+        </ThemeProvider>
     )
 };
 export default Agenda;
