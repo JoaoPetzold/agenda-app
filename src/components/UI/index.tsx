@@ -103,6 +103,7 @@ export const DDItem = styled.div<StyledProps>`
         cursor: pointer;
         color: ${(props) => props.theme.Gray6};
         background-color: ${(props) => props.theme.Blue};
+        box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(props.theme.Blue, 0.15)};  
     }
     &:active {
         color: ${(props) => props.theme.Contrast};
@@ -116,15 +117,16 @@ export const DDItem = styled.div<StyledProps>`
 
     // ---- Container ---- //
 export const AgendaContainer = styled.div<StyledProps>`
-    width: 65%;
+    width: calc(65vh / 0.5625);
     height: 65%;
     backdrop-filter: blur(1rem);
     border-radius: 0.5rem;
 
-    @media(max-width: 1280px) {
-        width: 80%;
-        height: 65%;
-    }
+    @media(max-width: 600px) {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    };
 `;
 
 export const AgendaBox = styled.div<StyledProps>`
@@ -144,7 +146,17 @@ export const AgendaBox = styled.div<StyledProps>`
 
     @media(max-width: 1280px) {
         grid-template-columns: 40% auto;
-    }
+    };
+    @media(max-width: 600px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 8% 42% 42% 8%;
+        grid-template-areas: 
+            "n"
+            "c"
+            "a"
+            "ec";
+        border-radius: 0;
+    };
 `;
     // ---- Fim Container ---- //
     // --- Calendario ---- //
@@ -153,10 +165,18 @@ export const CalendarioContainer = styled.div<StyledProps>`
     width: 100%;
     height: 100%;
 
+    display: flex;
+    justify-self: center;
+
     margin-left: 1rem;
+    @media(max-width: 600px) {
+        width: 95%;
+        margin-left: 0;
+    };
 
     .react-calendar {
         height: 100%;
+        width: 100%;
 
         .react-calendar__navigation {
             display: flex;
@@ -283,6 +303,11 @@ export const AreaContainer = styled.div<StyledProps>`
 
     overflow-x: hidden;
     overflow-y: scroll;
+
+    @media(max-width: 600px) {
+        justify-content: center;
+        padding-right: 0;
+    };
 `;
 
 export const EventContainer = styled.div<StyledProps>`
@@ -323,7 +348,9 @@ export const EventContainer = styled.div<StyledProps>`
     };
 
     &:active {
-        ${(props) => props.active ? (props.active = false) : animation(['scale-open', '0.1s', 'cubic-bezier(0.390, 0.575, 0.565, 1.000)', 'both'])};
+        @media(min-width: 600px) {
+            ${(props) => props.active ? (props.active = false) : animation(['scale-open', '0.1s', 'cubic-bezier(0.390, 0.575, 0.565, 1.000)', 'both'])};
+        };
     };
 
     @keyframes scale-open {
@@ -352,6 +379,9 @@ export const EventTitle = styled.span`
     grid-area: evtitle;
     margin: 1rem;
     font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 export const EventDescription = styled.div<StyledProps>`
@@ -369,6 +399,10 @@ export const EventDescription = styled.div<StyledProps>`
     margin: 1rem;
     font-size: 0.8rem;
     text-align: justify;
+    
+    @media(max-width: 600px) {
+        font-size: 0.75rem;
+    }
 `;
 
 export const EventTime = styled.span`
