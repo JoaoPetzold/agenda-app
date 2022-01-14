@@ -12,6 +12,8 @@ interface StyledProps {
     colorx?: Colors;
     active?: Boolean;
     screenPos?: screenPosition;
+    invisible?: Boolean;
+    showDisplay?: Boolean;
 };
 
 export const Background = styled.div`
@@ -28,6 +30,8 @@ export const Background = styled.div`
 `;
 
 export const ButtonCircle = styled.button<StyledProps>`
+    ${(props) => props.invisible   ? `visibility: hidden` : `visibility: visible`};
+    ${(props) => props.showDisplay ? `display: none` : `display: block`};
     width: 2.2rem;
     height: 2.2rem;
 
@@ -36,13 +40,7 @@ export const ButtonCircle = styled.button<StyledProps>`
     font-size: 1.2rem;
     text-align: center;
     border-radius: 5rem;
-
-    svg {
-        margin-left: auto;
-        margin-right: auto;
-        display: block !important;
-        color: ${(props) => props.theme.Contrast};
-    }
+    svg {margin-left: auto;margin-right: auto;display: block !important;color: ${(props) => props.theme.Contrast};};
 
     &:hover {
         cursor: pointer;
@@ -54,6 +52,9 @@ export const ButtonCircle = styled.button<StyledProps>`
         svg {
             color: ${(props) => props.theme.Contrast};
         }
+    }
+    & > * {
+        pointer-events: none;
     }
 `;
 
@@ -139,7 +140,7 @@ export const AgendaBox = styled.div<StyledProps>`
     box-shadow: 0px 0px 0.5rem 0.15rem rgba(0,0,0,0.25);
     border-radius: 0.5rem;
 
-    background-color: ${(props) => rgba(props.theme.Gray6, 0.825)};
+    background-color: ${(props) => rgba(props.theme.Gray6, 0.75)};
 
     @media(max-width: 1280px) {
         grid-template-columns: 40% auto;
@@ -288,23 +289,33 @@ export const EventContainer = styled.div<StyledProps>`
     ${(props) => props.active ? 
         `
             width: 90%;
-            height: 14rem;
+            height: 10rem;
+            display: grid;
+            grid-template-columns: 0.5rem 80% auto;
+            grid-template-rows: 35% 45% 20%;
+            grid-template-areas: 
+                "evgrp evtitle evtime"
+                "evgrp evdesc evdesc"
+                "evgrp evbtn evbtn";
+
+            align-items: center;
         `
     : 
         `
             width: 90%;
             height: 3.5rem;
+            display: flex;
+            align-items: center;
         `
     }
-    display: flex;
-    align-items: center;
     margin: 0.5rem 0;
-
-    box-shadow: 0px 0px 0.4rem 0.1rem rgba(0,0,0,0.15);
+    box-shadow: 0px 0px 0.4rem 0.1rem rgba(0,0,0,0.125);
     border-radius: 0.5rem;
+    user-select: none;
 
     color: ${(props) => props.theme.Contrast};
-    background-color: ${(props) => rgba(props.theme[props.colorx!], 0.9)};
+    background-color: ${(props) => rgba(props.theme[props.colorx!], 0.5)};
+    background-attachment: local, local, scroll, scroll;
 
     &:hover {
         cursor: pointer;
@@ -318,16 +329,17 @@ export const EventContainer = styled.div<StyledProps>`
     @keyframes scale-open {
         0% {
             transform:scaleY(1);
-            transform-origin:100% 0;
+            transform-origin: 100% 0;
         }
         100% {
-            transform:scaleY(4);
-            transform-origin:100% 0;
+            transform:scaleY(2.7);
+            transform-origin: 100% 0;
         }
     };
 `;
 
 export const EventGroup = styled.div<StyledProps>`
+    grid-area: evgrp;
     width: 0.5rem;
     height: 100%;
 
@@ -337,17 +349,37 @@ export const EventGroup = styled.div<StyledProps>`
 `;
 
 export const EventTitle = styled.span`
+    grid-area: evtitle;
     margin: 1rem;
+    font-size: 1rem;
+`;
+
+export const EventDescription = styled.div<StyledProps>`
+    grid-area:  evdesc;
+    ${(props) => props.active ? 
+        `
+            display: block;
+        `
+    :
+        `
+            display: none;
+        `
+    };
+
+    margin: 1rem;
+    font-size: 0.8rem;
+    text-align: justify;
 `;
 
 export const EventTime = styled.span`
-    margin: 0 1rem 0 auto;
+    grid-area: evtime;
+    margin: 1rem 1rem 1rem auto;
 `;
 
 export const EventControls = styled.div<StyledProps>`
     grid-area: ec;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     width: 100%;
     height: 100%;

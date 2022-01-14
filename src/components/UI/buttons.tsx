@@ -21,7 +21,7 @@ export const ButtonCircleDropdown : FC<ButtonProps> = ({children, idElement, ite
             const obj = document.getElementById(idElement);
             setWindowHeight(obj!?.offsetTop);
             setWindowWidth(obj!?.offsetLeft + obj!?.offsetWidth / 2);
-        }
+        }   // TODO: APARECER SOMENTE DEPOIS DE DEFINIR A POSICAO
     }, [activeDropdown, idElement]);
 
     useEffect(() => {
@@ -44,7 +44,7 @@ export const ButtonCircleDropdown : FC<ButtonProps> = ({children, idElement, ite
     return (
         <>
             <DropDown ref={ref} colorx={colorx} active={activeDropdown} screenPos={{top: windowHeight, left: windowWidth}}>
-                {items.map(item => <DDItem key={item.idEvent}>{item.icon} {item.caption}</DDItem>)}
+                {items.map(item => <DDItem key={item.idEvent}>{item.icon}{item.caption}</DDItem>)}
             </DropDown>
             <ButtonCircle id={idElement} colorx={colorx} onClick={props.onClick}> 
                 {children}
