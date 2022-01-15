@@ -181,7 +181,7 @@ const Agenda = () => {
             caption: "Concluir Evento",
             icon: <FaCheck />
         }
-    ];
+    ];    
 
     return (
         <ThemeProvider theme={isDarkTheme ? ColorSchemeDark : ColorSchemeLight}>

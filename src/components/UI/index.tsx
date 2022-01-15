@@ -56,6 +56,11 @@ export const ButtonCircle = styled.button<StyledProps>`
     & > * {
         pointer-events: none;
     }
+
+    @media(max-width: 600px) {
+        width: 3.2rem;
+        height: 3.2rem;   
+    };
 `;
 
 export const DropDown = styled.div<StyledProps>`
@@ -85,6 +90,14 @@ export const DropDown = styled.div<StyledProps>`
     background-color: ${(props) => rgba(props.theme.Gray6, 0.99)};
     box-shadow: 0px 0px 0.4rem 0.1rem rgba(0,0,0,0.15);
     border-radius: 0.5rem; 
+
+    @media(max-width: 600px) {
+        width: 16rem;
+        height: 6rem;
+
+        left: calc(${(props) => props.screenPos!?.left}px - 8rem);
+        top: calc(${(props) => props.screenPos!?.top}px - 6.25rem);
+    };
 `;
 
 export const DDItem = styled.div<StyledProps>`
@@ -111,6 +124,10 @@ export const DDItem = styled.div<StyledProps>`
     svg {
         margin: 0 0.5rem;
     }
+
+    @media(max-width: 600px) {
+        height: 2.8rem;
+    }
 `;
 
 // ---- Agenda ---- // 
@@ -130,6 +147,7 @@ export const AgendaContainer = styled.div<StyledProps>`
 `;
 
 export const AgendaBox = styled.div<StyledProps>`
+    font-size: 1rem;
     display: grid;
     grid-template-columns: 35% auto;
     grid-template-rows: 90% auto;
@@ -149,13 +167,14 @@ export const AgendaBox = styled.div<StyledProps>`
     };
     @media(max-width: 600px) {
         grid-template-columns: 1fr;
-        grid-template-rows: 8% 42% 42% 8%;
+        grid-template-rows: 8% 37% 45% 10%;
         grid-template-areas: 
             "n"
             "c"
             "a"
             "ec";
         border-radius: 0;
+        font-size: 1.25rem;
     };
 `;
     // ---- Fim Container ---- //
@@ -195,6 +214,10 @@ export const CalendarioContainer = styled.div<StyledProps>`
         }
 
         button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
             margin: 0.15rem;
             background-color: transparent;
             border: 0;
@@ -206,8 +229,13 @@ export const CalendarioContainer = styled.div<StyledProps>`
                 cursor: pointer;
                 outline: 0.1rem solid ${(props) => props.theme.Blue};
                 outline-offset: 0px;
-                border-radius: 5rem;
+                border-radius: 1rem;
             }
+            @media(max-width: 600px) {
+                padding: 0;
+                margin: 0;
+                font-size: 1.15rem;
+            };
         }
 
         .react-calendar__viewContainer {
@@ -222,19 +250,17 @@ export const CalendarioContainer = styled.div<StyledProps>`
             .react-calendar__tile--range {
                 outline: 0.1rem solid ${(props) => props.theme.Blue};
                 outline-offset: 0px;
-                border-radius: 5rem;
+                border-radius: 1rem;
                 color: ${(props) => props.theme.Contrast};
             }
             .react-calendar__tile--now {
-                color: ${(props) => props.theme.Gray6};
-                background-color: ${(props) => props.theme.Blue};
-                border-radius: 5rem;
+                outline: 0.1rem solid ${(props) => props.theme.Gray1};
+                outline-offset: 0px;
+                border-radius: 1rem;
                 font-weight: bold;
                 &:enabled:hover, &:enabled:focus {
                     outline: 0.1rem solid ${(props) => props.theme.Blue};
                     outline-offset: 0px;
-                    border-radius: 5rem;
-                    color: ${(props) => props.theme.Gray6};
                 }
             }
             .react-calendar__month-view {
@@ -306,14 +332,13 @@ export const AreaContainer = styled.div<StyledProps>`
 
     @media(max-width: 600px) {
         justify-content: center;
-        padding-right: 0;
+        padding: 0;
     };
 `;
 
 export const EventContainer = styled.div<StyledProps>`
     ${(props) => props.active ? 
         `
-            width: 90%;
             height: 10rem;
             display: grid;
             grid-template-columns: 0.5rem 80% auto;
@@ -327,12 +352,12 @@ export const EventContainer = styled.div<StyledProps>`
         `
     : 
         `
-            width: 90%;
             height: 3.5rem;
             display: flex;
             align-items: center;
         `
     }
+    width: 90%;
     margin: 0.5rem 0;
     box-shadow: 0px 0px 0.4rem 0.1rem rgba(0,0,0,0.125);
     border-radius: 0.5rem;
@@ -363,6 +388,10 @@ export const EventContainer = styled.div<StyledProps>`
             transform-origin: 100% 0;
         }
     };
+    
+    @media(max-width: 600px) {
+        width: 95%;
+    };
 `;
 
 export const EventGroup = styled.div<StyledProps>`
@@ -378,10 +407,13 @@ export const EventGroup = styled.div<StyledProps>`
 export const EventTitle = styled.span`
     grid-area: evtitle;
     margin: 1rem;
-    font-size: 1rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    
+    @media(max-width: 600px) {
+        font-size: 1.25rem;
+    };
 `;
 
 export const EventDescription = styled.div<StyledProps>`
@@ -419,6 +451,11 @@ export const EventControls = styled.div<StyledProps>`
     height: 100%;
 
     border-radius: 0 0 0 0.5rem;
+
+    @media(max-width: 600px) {
+        padding-top: 2%;
+        align-items: flex-start;
+    }
 `;
     // ---- Fim Eventos ---- //
 
