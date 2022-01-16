@@ -20,7 +20,7 @@ export const ButtonCircleDropdown : FC<ButtonProps> = ({children, idElement, ite
     const dropdownPosition = useCallback(() => {
         if (activeDropdown) {
             const obj = document.getElementById(idElement);
-            setWindowHeight(obj!?.offsetTop);
+            setWindowHeight(obj!?.offsetTop + obj!?.offsetHeight / 2);
             setWindowWidth(obj!?.offsetLeft + obj!?.offsetWidth / 2);
             ((obj!?.offsetTop) < (window.innerHeight / 2)) ? setOpenDown(true) : setOpenDown(false);
             

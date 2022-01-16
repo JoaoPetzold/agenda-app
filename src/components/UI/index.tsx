@@ -65,6 +65,9 @@ export const ButtonCircle = styled.button<StyledProps>`
 `;
 
 export const DropDown = styled.div<StyledProps>`
+    --vWidth: 12rem;
+    --vHeight: 5rem;
+
     ${(props) => props.active ? 
         `
             display: flex;
@@ -80,27 +83,30 @@ export const DropDown = styled.div<StyledProps>`
         `
     };
 
-    width: 12rem;
-    height: 5rem;
+    width: var(--vWidth);
+    height: var(--vHeight);
 
     padding: 0.5rem;
 
-    left: calc(${(props) => props.screenPos!?.left}px - 6rem);
-    top: calc(${(props) => props.screenPos!?.top}px - 5.25rem);
+    left: calc(${(props) => props.screenPos!?.left}px - var(--vWidth) / 2);
+    top: calc(${(props) => props.screenPos!?.top}px - var(--vHeight) - 1.25rem);
 
     background-color: ${(props) => rgba(props.theme.Gray6, 0.99)};
     box-shadow: 0px 0px 0.4rem 0.1rem rgba(0,0,0,0.15);
     border-radius: 0.5rem; 
 
     @media(max-width: 600px) {
-        width: 16rem;
-        height: 6rem;
+        --vWidth: 16rem;
+        --vHeight: 6rem;
 
-        left: calc(${(props) => props.screenPos!?.left}px - 8rem);
+        width: var(--vWidth);
+        height: var(--vHeight);
+
+        left: calc(${(props) => props.screenPos!?.left}px - var(--vWidth) / 2));
         top: ${(props) => props.screenPos!?.openDown ?
-                `calc(${props.screenPos!?.top}px + 3.5rem)`
+                `calc(${props.screenPos!?.top}px + var(--vHeight) / 2 - 1.25rem)`
             :
-                `calc(${props.screenPos!?.top}px - 6.25rem)`
+                `calc(${props.screenPos!?.top}px - var(--vHeight) - 1.8rem)`
             };
     };
 `;
