@@ -12,6 +12,7 @@ export type ButtonProps = JSX.IntrinsicElements["button"] & {
 export const ButtonCircleDropdown : FC<ButtonProps> = ({children, idElement, items, colorx, ...props}) => {
     const [windowWidth, setWindowWidth] = useState<number>(0);
     const [windowHeight, setWindowHeight] = useState<number>(0);
+    const [openDown, setOpenDown] = useState<Boolean>(false);
     const [activeDropdown, setActiveDropdown] = useState<Boolean>(false);
     const [showDropdown, setShowDropdown] = useState<Boolean>(activeDropdown);
     const ref = useRef<any>(null);
@@ -21,8 +22,10 @@ export const ButtonCircleDropdown : FC<ButtonProps> = ({children, idElement, ite
             const obj = document.getElementById(idElement);
             setWindowHeight(obj!?.offsetTop);
             setWindowWidth(obj!?.offsetLeft + obj!?.offsetWidth / 2);
+            ((obj!?.offsetTop) < (window.innerHeight / 2)) ? setOpenDown(true) : setOpenDown(false);
+            
             setShowDropdown(true);
-        } else {setShowDropdown(false)}  // TODO: APARECER SOMENTE DEPOIS DE DEFINIR A POSICAO
+        } else {setShowDropdown(false)}
     }, [activeDropdown, idElement]);
 
     useEffect(() => {
@@ -44,7 +47,7 @@ export const ButtonCircleDropdown : FC<ButtonProps> = ({children, idElement, ite
 
     return (
         <>
-            <DropDown ref={ref} colorx={colorx} active={showDropdown} screenPos={{top: windowHeight, left: windowWidth}}>
+            <DropDown ref={ref} colorx={colorx} active={showDropdown} screenPos={{top: windowHeight, left: windowWidth, openDown: openDown}}>
                 {items.map(item => <DDItem key={item.idEvent}>{item.icon}{item.caption}</DDItem>)}
             </DropDown>
             <ButtonCircle id={idElement} colorx={colorx} onClick={props.onClick}> 

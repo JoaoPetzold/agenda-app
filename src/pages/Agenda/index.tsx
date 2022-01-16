@@ -144,6 +144,10 @@ const EventosDia = [
     }
 ];
 
+const DiaEvento = [
+    17, 20, 21
+]
+
 const Agenda = () => {
     const [isDarkTheme, setIsDarkTheme] = useState<Boolean>(false);
     const [valorData, setValorData] = useState<Date>(new Date());
@@ -189,11 +193,11 @@ const Agenda = () => {
                 <AgendaBox>
                     <CalendarioContainer>
                         <Calendar 
-                            className={styles.reactCalendar}
                             value={valorData} 
                             onClickDay={(e : any) => setValorData(e.target)}
                             calendarType={'US'}
                             formatShortWeekday={(Locale, value) => ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'][value.getDay()]}
+                            tileClassName={({ date, view }) => view === 'month' && DiaEvento.find(x => date.getDate() === x) ? styles.DiaEvento : null}
                         />
                     </CalendarioContainer>
     

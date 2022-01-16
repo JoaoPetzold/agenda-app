@@ -5,6 +5,7 @@ import { rgba, animation } from 'polished';
 interface screenPosition {
     left: number;
     top: number;
+    openDown: Boolean;
 }
 
 interface StyledProps {
@@ -96,7 +97,11 @@ export const DropDown = styled.div<StyledProps>`
         height: 6rem;
 
         left: calc(${(props) => props.screenPos!?.left}px - 8rem);
-        top: calc(${(props) => props.screenPos!?.top}px - 6.25rem);
+        top: ${(props) => props.screenPos!?.openDown ?
+                `calc(${props.screenPos!?.top}px + 3.5rem)`
+            :
+                `calc(${props.screenPos!?.top}px - 6.25rem)`
+            };
     };
 `;
 
@@ -217,6 +222,7 @@ export const CalendarioContainer = styled.div<StyledProps>`
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1rem;
 
             margin: 0.15rem;
             background-color: transparent;
@@ -246,16 +252,26 @@ export const CalendarioContainer = styled.div<StyledProps>`
                 height: 100%;
                 width: 100%;
             }
+            .react-calendar__tile {
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                justify-content: center;
+                height: 80%;
 
+                div {
+                    font-size: 1.5rem;
+                }
+            }
             .react-calendar__tile--range {
                 outline: 0.1rem solid ${(props) => props.theme.Blue};
-                outline-offset: 0px;
+                outline-offset: -1px;
                 border-radius: 1rem;
                 color: ${(props) => props.theme.Contrast};
             }
             .react-calendar__tile--now {
                 outline: 0.1rem solid ${(props) => props.theme.Gray1};
-                outline-offset: 0px;
+                outline-offset: -1px;
                 border-radius: 1rem;
                 font-weight: bold;
                 &:enabled:hover, &:enabled:focus {
@@ -402,6 +418,10 @@ export const EventGroup = styled.div<StyledProps>`
     border-radius: 5rem 0 0 5rem;
 
     background-color: ${(props) => rgba(props.theme[props.colorx!], 1)};
+
+    @media(max-width: 600px) {
+        width: 0.6rem;
+    };
 `;
 
 export const EventTitle = styled.span`
@@ -410,6 +430,7 @@ export const EventTitle = styled.span`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 1rem;
     
     @media(max-width: 600px) {
         font-size: 1.25rem;
@@ -440,6 +461,11 @@ export const EventDescription = styled.div<StyledProps>`
 export const EventTime = styled.span`
     grid-area: evtime;
     margin: 1rem 1rem 1rem auto;
+    font-size: 1rem;
+    
+    @media(max-width: 600px) {
+        font-size: 1.25rem;
+    };
 `;
 
 export const EventControls = styled.div<StyledProps>`
