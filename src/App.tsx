@@ -1,11 +1,11 @@
 import './App.scss';
+import Rotas from './routes';
 import { Background } from './components/UI';
-import Agenda from './pages/Agenda';
 
 function App() {
     return (
         <Background>
-            <Agenda></Agenda>
+            <Rotas />
         </Background>
     );
 }
