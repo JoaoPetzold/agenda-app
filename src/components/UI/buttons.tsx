@@ -8,7 +8,6 @@ export type ButtonProps = JSX.IntrinsicElements["button"] & {
     colorx?: Colors;
 };
 
-
 export const ButtonCircleDropdown : FC<ButtonProps> = ({children, idElement, items, colorx, ...props}) => {
     const [windowWidth, setWindowWidth] = useState<number>(0);
     const [windowHeight, setWindowHeight] = useState<number>(0);

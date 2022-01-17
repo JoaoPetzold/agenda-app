@@ -89,11 +89,16 @@ export const DropDown = styled.div<StyledProps>`
     padding: 0.5rem;
 
     left: calc(${(props) => props.screenPos!?.left}px - var(--vWidth) / 2);
-    top: calc(${(props) => props.screenPos!?.top}px - var(--vHeight) - 1.25rem);
+    top: ${(props) => props.screenPos!?.openDown ?
+        `calc(${props.screenPos!?.top}px + var(--vHeight) / 2 - 1.25rem)`
+    :
+        `calc(${props.screenPos!?.top}px - var(--vHeight) - 1.25rem)`
+    };
 
     background-color: ${(props) => rgba(props.theme.Gray6, 0.99)};
     box-shadow: 0px 0px 0.4rem 0.1rem rgba(0,0,0,0.15);
     border-radius: 0.5rem; 
+    user-select: none;
 
     @media(max-width: 600px) {
         --vWidth: 16rem;
@@ -107,7 +112,7 @@ export const DropDown = styled.div<StyledProps>`
                 `calc(${props.screenPos!?.top}px + var(--vHeight) / 2 - 1.25rem)`
             :
                 `calc(${props.screenPos!?.top}px - var(--vHeight) - 1.8rem)`
-            };
+        };
     };
 `;
 
@@ -139,6 +144,25 @@ export const DDItem = styled.div<StyledProps>`
     @media(max-width: 600px) {
         height: 2.8rem;
     }
+`;
+
+export const Label = styled.label<StyledProps>`
+`;
+
+export const Input = styled.input<StyledProps>`
+    padding: 0 0.75rem;
+    border: none;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+
+    outline: 0.1rem solid ${(props) => props.theme.Gray3};
+    outline-offset: 0;
+
+    &:enabled:focus {
+        outline: 0.15rem solid ${(props) => props.theme.Blue};
+        outline-offset: 0.1rem;
+        box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(props.theme.Blue, 0.15)}; 
+    };
 `;
 
 // ---- Agenda ---- // 
@@ -488,6 +512,41 @@ export const EventControls = styled.div<StyledProps>`
         padding-top: 2%;
         align-items: flex-start;
     }
+`;
+
+export const EventForm = styled.form<StyledProps>`
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 10% 2rem 12% 12% 12% auto;
+    grid-template-areas: 
+        "EFT"
+        "EFE"
+        "EFA"
+        "EFD"
+        "EFH";
+    
+    align-content: flex-start;
+
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem 0.5rem 0.5rem 2.0rem;
+    margin: 0.15rem;
+
+    span {
+        grid-area: EFT;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 1rem;
+        text-align: center;
+        width: 100%;
+    }
+    color: ${(props) => props.theme.Contrast};
+
+    @media(max-width: 600px) {
+        font-size: 1.15rem;
+
+        span{font-size: 1.15rem};
+    };
 `;
     // ---- Fim Eventos ---- //
 

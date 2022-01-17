@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import Calendar from 'react-calendar';
-import { AgendaContainer, CalendarioContainer, AgendaBox, NavbarContainer, ButtonCircle, AreaContainer, EventContainer, EventGroup, EventTitle, EventTime, EventControls, EventDescription } from '../../components/UI';
+import { AgendaContainer, CalendarioContainer, AgendaBox, NavbarContainer, ButtonCircle, AreaContainer, EventContainer, EventGroup, EventTitle, EventTime, EventControls, EventDescription, EventForm, Label, Input } from '../../components/UI';
 import { ButtonCircleDropdown } from '../../components/UI/buttons';
 import styles from './styles.module.scss';
 import { ThemeProvider } from 'styled-components';
 import { Colors, ColorSchemeLight, ColorSchemeDark } from '../../components/UI/color'
-import { FaUserAlt, FaMoon, FaSun, FaPlus, FaDoorOpen, FaRegAddressBook, FaCheck, FaTrashAlt, FaEllipsisH } from 'react-icons/fa';
+import { FaUserAlt, FaMoon, FaSun, FaPlus, FaDoorOpen, FaRegAddressBook, FaCheck, FaTrashAlt, FaEllipsisH, FaTimes } from 'react-icons/fa';
 import { utcToZonedTime, format } from 'date-fns-tz';
+import { LabelInputText } from '../../components/UI/inputs';
 
 const Agendas = [
     {
@@ -153,6 +154,8 @@ const Agenda = () => {
     const [valorData, setValorData] = useState<Date>(new Date());
     const [flippedIndex, setFlippedIndex] = useState<number>(-1);
 
+    const [novoEvento, setNovoEvento] = useState<Boolean>(false);
+
     const toggleFlippedIndex = (cd_evento : number) => {
         setFlippedIndex(flippedIndex === cd_evento ? -1 : cd_evento);
     };
@@ -213,22 +216,41 @@ const Agenda = () => {
 
                     <AreaContainer>
                         { 
-                            EventosDia.map(item => 
-                                <EventContainer key={item.CD_EVENTO} colorx={Colors.Gray6} onClick={() => toggleFlippedIndex(item.CD_EVENTO)} active={flippedIndex === item.CD_EVENTO}>
-                                    <EventGroup colorx={Colors[colorGroup(item.CD_AGENDA)]} />
-                                    <EventTitle>{item.EVENTO}</EventTitle>
-                                    <EventTime>{format(utcToZonedTime(new Date(item.DATA), 'America/Sao_Paulo'), 'HH:mm')}</EventTime>
-                                    <EventDescription active={flippedIndex === item.CD_EVENTO}>{item.DESCRICAO}</EventDescription>
-                                </EventContainer>
-                            )
+                            novoEvento ?
+                                <EventForm>
+                                    <span>Definições do Evento</span>
+                                    <LabelInputText label={"Titulo do Evento"} value={""}/>
+                                </EventForm>
+                            :
+                                EventosDia.map(item => 
+                                    <EventContainer key={item.CD_EVENTO} colorx={Colors.Gray6} onClick={() => toggleFlippedIndex(item.CD_EVENTO)} active={flippedIndex === item.CD_EVENTO}>
+                                        <EventGroup colorx={Colors[colorGroup(item.CD_AGENDA)]} />
+                                        <EventTitle>{item.EVENTO}</EventTitle>
+                                        <EventTime>{format(utcToZonedTime(new Date(item.DATA), 'America/Sao_Paulo'), 'HH:mm')}</EventTime>
+                                        <EventDescription active={flippedIndex === item.CD_EVENTO}>{item.DESCRICAO}</EventDescription>
+                                    </EventContainer>
+                                )
                         }
                     </AreaContainer>
 
                     <EventControls>
                         {flippedIndex === -1 ?
-                            <ButtonCircle colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6}>
-                                <FaPlus />
-                            </ButtonCircle>                            
+                            (
+                                novoEvento ?
+                                    <>
+                                        <ButtonCircle colorx={Colors.Red} onClick={() => setNovoEvento(false)}>
+                                            <FaTimes />
+                                        </ButtonCircle>
+
+                                        <ButtonCircle colorx={Colors.Green}>
+                                            <FaCheck />
+                                        </ButtonCircle>
+                                    </>
+                                :
+                                    <ButtonCircle colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6} onClick={() => setNovoEvento(true)}>
+                                        <FaPlus />
+                                    </ButtonCircle>  
+                            )                          
                         :
                             
                             <ButtonCircleDropdown idElement={"btn-event-options"} colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6} items={MenuEventoOpcoes}>
