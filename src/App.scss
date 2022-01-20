@@ -48,7 +48,6 @@ $cDark: (
 
 html, body { 
     height: 100vh;
-    font-family: -apple-system, BlinkMacSystemFont, 'Inter', Arial, Helvetica, sans-serif;
 }
 
 a {
@@ -60,6 +59,7 @@ a {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', Arial, Helvetica, sans-serif;
 }
 
 @media(max-width: 1080px) {

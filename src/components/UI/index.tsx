@@ -150,19 +150,78 @@ export const Label = styled.label<StyledProps>`
 `;
 
 export const Input = styled.input<StyledProps>`
-    padding: 0 0.75rem;
+    min-height: 2rem;
+    max-height: 2.5rem;
+
+    padding: 0.5rem 0.75rem;
     border: none;
-    border-radius: 0.75rem;
+    border-radius: 0.5rem;
     font-size: 1rem;
 
     outline: 0.1rem solid ${(props) => props.theme.Gray3};
     outline-offset: 0;
+
+    color: ${(props) => props.theme.Contrast};
+    background-color: ${(props) => props.theme.Gray6};
 
     &:enabled:focus {
         outline: 0.15rem solid ${(props) => props.theme.Blue};
         outline-offset: 0.1rem;
         box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(props.theme.Blue, 0.15)}; 
     };
+`;
+
+export const TextArea = styled.textarea`
+    min-height: 2rem;
+    max-height: 10rem;
+    resize: none;
+
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+
+    outline: 0.1rem solid ${(props) => props.theme.Gray3};
+    outline-offset: 0;
+
+    color: ${(props) => props.theme.Contrast};
+    background-color: ${(props) => props.theme.Gray6};
+
+    &:enabled:focus {
+        outline: 0.15rem solid ${(props) => props.theme.Blue};
+        outline-offset: 0.1rem;
+        box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(props.theme.Blue, 0.15)}; 
+    };
+`;
+
+export const Select = styled.select<StyledProps>`
+    min-height: 2rem;
+    max-height: 2.5rem;
+
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+
+    outline: 0.1rem solid ${(props) => props.theme.Gray3};
+    outline-offset: 0;
+
+    color: ${(props) => props.theme.Contrast};
+    background-color: ${(props) => props.theme.Gray6};
+
+    &:enabled:focus {
+        outline: 0.15rem solid ${(props) => props.theme.Blue};
+        outline-offset: 0.1rem;
+        box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(props.theme.Blue, 0.15)}; 
+    };
+`;
+
+export const Option = styled.option<StyledProps>`
+    color: ${(props) => props.theme.Contrast};
+    background-color: ${(props) => props.theme.Gray6};
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(props.theme.Blue, 0.15)}; 
 `;
 
 // ---- Agenda ---- // 
@@ -184,7 +243,7 @@ export const AgendaContainer = styled.div<StyledProps>`
 export const AgendaBox = styled.div<StyledProps>`
     font-size: 1rem;
     display: grid;
-    grid-template-columns: 35% auto;
+    grid-template-columns: 40% auto;
     grid-template-rows: 90% auto;
     grid-template-areas: 
         "c a"
@@ -516,14 +575,13 @@ export const EventControls = styled.div<StyledProps>`
 
 export const EventForm = styled.form<StyledProps>`
     display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 10% 2rem 12% 12% 12% auto;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 10% 3.5rem 3.5rem calc(100% - 10% - 3.5rem - 3.5rem);
     grid-template-areas: 
-        "EFT"
-        "EFE"
-        "EFA"
-        "EFD"
-        "EFH";
+        "EFT EFT"
+        "EFE EFH"
+        "EFC EFA"
+        "EFD EFD";
     
     align-content: flex-start;
 
@@ -531,17 +589,16 @@ export const EventForm = styled.form<StyledProps>`
     height: 100%;
     padding: 0.5rem 0.5rem 0.5rem 2.0rem;
     margin: 0.15rem;
+    color: ${(props) => props.theme.Contrast};
 
     span {
-        grid-area: EFT;
         text-transform: uppercase;
         font-weight: bold;
         font-size: 1rem;
         text-align: center;
         width: 100%;
-    }
-    color: ${(props) => props.theme.Contrast};
-
+    };
+    
     @media(max-width: 600px) {
         font-size: 1.15rem;
 
