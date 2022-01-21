@@ -30,6 +30,34 @@ export const Background = styled.div`
     background-size: cover;
 `;
 
+export const Button = styled.button<StyledProps>`
+    ${(props) => props.invisible   ? `visibility: hidden` : `visibility: visible`};
+    ${(props) => props.showDisplay ? `display: none` : `display: block`};
+
+    min-width: 3rem;
+    min-height: 2.2rem;
+    max-width: 100%;
+    max-height: 100%;
+
+    color: ${(props) => props.theme[props.colorx!]};
+    background-color:  ${(props) => rgba(props.theme.Gray6, 0.25)};
+
+    border: none;
+    border-top: 0.1rem solid ${(props) => props.theme.Gray2};
+    border-radius: 0 0 0.5rem 0.5rem;
+    font-size: 1.2rem;
+    text-align: center;
+
+    &:hover {
+        border-top: 0.1rem solid ${(props) => props.theme.Blue};
+        cursor: pointer;
+        box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(props.theme.Blue, 0.15)};  
+    };
+    & > * {
+        pointer-events: none;
+    };
+`;
+
 export const ButtonCircle = styled.button<StyledProps>`
     ${(props) => props.invisible   ? `visibility: hidden` : `visibility: visible`};
     ${(props) => props.showDisplay ? `display: none` : `display: block`};
@@ -46,17 +74,17 @@ export const ButtonCircle = styled.button<StyledProps>`
     &:hover {
         cursor: pointer;
         box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(props.theme.Blue, 0.15)};  
-    }
+    };
     &:active {
         background-color: ${(props) => props.theme.Gray5};
 
         svg {
             color: ${(props) => props.theme.Contrast};
-        }
-    }
+        };
+    };
     & > * {
         pointer-events: none;
-    }
+    };
 
     @media(max-width: 600px) {
         width: 3.2rem;
@@ -161,6 +189,8 @@ export const Input = styled.input<StyledProps>`
 
     outline: 0.1rem solid ${(props) => props.theme.Gray3};
     outline-offset: 0;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
 
     color: ${(props) => props.theme.Contrast};
     background-color: ${(props) => props.theme.Gray6};
@@ -187,6 +217,8 @@ export const TextArea = styled.textarea`
 
     outline: 0.1rem solid ${(props) => props.theme.Gray3};
     outline-offset: 0;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
 
     color: ${(props) => props.theme.Contrast};
     background-color: ${(props) => props.theme.Gray6};
@@ -209,6 +241,8 @@ export const Select = styled.select<StyledProps>`
 
     outline: 0.1rem solid ${(props) => props.theme.Gray3};
     outline-offset: 0;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
 
     color: ${(props) => props.theme.Contrast};
     background-color: ${(props) => props.theme.Gray6};
@@ -227,6 +261,113 @@ export const Option = styled.option<StyledProps>`
     border-radius: 1rem;
     box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(props.theme.Blue, 0.15)}; 
 `;
+
+// ---- Login ---- //
+export const LoginContainer = styled.div<StyledProps>`
+    width: calc(30vh / 0.5625);
+    height: 30%;
+    backdrop-filter: blur(1rem);
+    border-radius: 0.5rem;
+
+    @media(max-width: 600px) {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    };
+`;
+
+export const LoginForm = styled.form<StyledProps>`
+    font-size: 1rem;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto 3.5rem 2.6rem 1.5rem 3rem;
+    grid-template-areas: 
+        "LHEAD"
+        "LUSER"
+        "LPASS"
+        "LSPAN"
+        "LBTN";
+
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 0px 0.5rem 0.15rem rgba(0,0,0,0.25);
+    border-radius: 0.5rem;
+    color: ${(props) => props.theme.Contrast};
+    background-color: ${(props) => rgba(props.theme.Gray6, 0.75)};
+
+    input{
+        align-self: flex-start;
+        justify-self: center;
+    };
+
+    #cadastro{
+        color: ${(props) => props.theme.Blue};
+        &:hover{
+            cursor: pointer;
+            text-decoration: underline;
+        };
+    };
+
+    @media(max-width: 600px) {
+        
+    };
+`;
+
+export const RegisterContainer = styled.div<StyledProps>`
+    width: calc(30vh / 0.5625);
+    height: 40%;
+    backdrop-filter: blur(1rem);
+    border-radius: 0.5rem;
+
+    @media(max-width: 600px) {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    };
+`;
+
+export const RegisterForm = styled.form<StyledProps>`
+    font-size: 1rem;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto 3.5rem 3.5rem 3.5rem 3.5rem 3rem;
+    grid-template-areas: 
+        "LHEAD"
+        "LNAME"
+        "LUSER"
+        "LPASS"
+        "CPASS"
+        "LBTN";
+
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 0px 0.5rem 0.15rem rgba(0,0,0,0.25);
+    border-radius: 0.5rem;
+    color: ${(props) => props.theme.Contrast};
+    background-color: ${(props) => rgba(props.theme.Gray6, 0.75)};
+
+    input{
+        align-self: flex-start;
+        justify-self: center;
+    };
+
+    #cadastro{
+        color: ${(props) => props.theme.Blue};
+        &:hover{
+            cursor: pointer;
+            text-decoration: underline;
+        };
+    };
+
+    @media(max-width: 600px) {
+        
+    };
+`;
+// ---- Fim Login ---- //
 
 // ---- Agenda ---- // 
 
@@ -251,7 +392,7 @@ export const AgendaBox = styled.div<StyledProps>`
     grid-template-rows: 90% auto;
     grid-template-areas: 
         "c a"
-        "n ec";
+        "n a";
 
     width: 100%;
     height: 100%;
@@ -265,12 +406,11 @@ export const AgendaBox = styled.div<StyledProps>`
     };
     @media(max-width: 600px) {
         grid-template-columns: 1fr;
-        grid-template-rows: 8% 37% 45% 10%;
+        grid-template-rows: 8% 37% auto;
         grid-template-areas: 
             "n"
             "c"
-            "a"
-            "ec";
+            "a";
         border-radius: 0;
         font-size: 1.25rem;
     };
@@ -324,11 +464,14 @@ export const CalendarioContainer = styled.div<StyledProps>`
             padding: 1rem 0;
             font-weight: bold;
 
+            border-radius: 1rem;
+            -webkit-border-radius: 1rem;
+            -moz-border-radius: 1rem;
+
             &:hover {
                 cursor: pointer;
                 outline: 0.1rem solid ${(props) => props.theme.Blue};
                 outline-offset: 0px;
-                border-radius: 1rem;
             }
             @media(max-width: 600px) {
                 padding: 0;
@@ -359,7 +502,6 @@ export const CalendarioContainer = styled.div<StyledProps>`
             .react-calendar__tile--range {
                 outline: 0.1rem solid ${(props) => props.theme.Blue};
                 outline-offset: -1px;
-                border-radius: 1rem;
                 color: ${(props) => props.theme.Contrast};
             }
             .react-calendar__tile--now {
@@ -421,8 +563,25 @@ export const CalendarioContainer = styled.div<StyledProps>`
     // ---- Fim Calendario ---- //
 
     // ---- Eventos ---- //
-export const AreaContainer = styled.div<StyledProps>`
+export const EventArea = styled.div<StyledProps>`
     grid-area: a;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 90% auto;
+    grid-template-areas: 
+        "EVP"
+        "EVC";
+
+    width: 100%;
+    height: 100%;
+
+    @media(max-width: 600px) {
+        grid-template-rows: 85% auto;
+    };
+`;
+
+export const AreaContainer = styled.div<StyledProps>`
+    grid-area: EVP;
 
     display: flex;
     flex-wrap: wrap;
@@ -562,7 +721,7 @@ export const EventTime = styled.span`
 `;
 
 export const EventControls = styled.div<StyledProps>`
-    grid-area: ec;
+    grid-area: EVC;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -578,6 +737,7 @@ export const EventControls = styled.div<StyledProps>`
 `;
 
 export const EventForm = styled.form<StyledProps>`
+    grid-area: EVP;
     display: grid;
     grid-template-columns: 70% 30%;
     grid-template-rows: 10% 3.5rem 3.5rem calc(100% - 10% - 3.5rem - 3.5rem);
