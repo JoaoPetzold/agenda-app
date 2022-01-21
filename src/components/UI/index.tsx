@@ -152,6 +152,7 @@ export const Label = styled.label<StyledProps>`
 export const Input = styled.input<StyledProps>`
     min-height: 2rem;
     max-height: 2.5rem;
+    max-width: 100%;
 
     padding: 0.5rem 0.75rem;
     border: none;
@@ -163,6 +164,9 @@ export const Input = styled.input<StyledProps>`
 
     color: ${(props) => props.theme.Contrast};
     background-color: ${(props) => props.theme.Gray6};
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
 
     &:enabled:focus {
         outline: 0.15rem solid ${(props) => props.theme.Blue};
@@ -601,8 +605,11 @@ export const EventForm = styled.form<StyledProps>`
     
     @media(max-width: 600px) {
         font-size: 1.15rem;
+        justify-content: center;
+        padding: 0.75rem;
+        margin: 0;
 
-        span{font-size: 1.15rem};
+        span{font-size: 1.15rem};        
     };
 `;
     // ---- Fim Eventos ---- //

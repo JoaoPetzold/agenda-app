@@ -12,7 +12,7 @@ export interface IAgendaContext {
     agendaMode          : AgendaModes;
     setAgendaMode?      : any;
 
-    calendarDate        : Date;
+    calendarDate        : any;
     setCalendarDate?    : any;
 
     flippedIndex        : number;

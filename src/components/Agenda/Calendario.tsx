@@ -10,7 +10,7 @@ const Calendario = () => {
     return (
         <Calendar 
             value={calendarDate} 
-            onClickDay={(e : any) => setCalendarDate(e.target as Date)}
+            onChange={setCalendarDate}
             calendarType={'US'}
             formatShortWeekday={(Locale, value) => ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'][value.getDay()]}
             tileClassName={({ date, view }) => view === 'month' && DiaEvento.find(x => date.getDate() === x) ? styles.DiaEvento : null}

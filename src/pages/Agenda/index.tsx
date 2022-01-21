@@ -13,7 +13,7 @@ import Calendario from '../../components/Agenda/Calendario';
 const Agenda = () => {
     const [isDarkTheme, setIsDarkTheme] = useState<Boolean>(false);
     const [agendaMode, setAgendaMode] = useState<AgendaModes>(AgendaModes.ViewMode);
-    const [calendarDate, setCalendarDate] = useState<Date>(new Date());
+    const [calendarDate, setCalendarDate] = useState<any>(new Date());
     const [flippedIndex, setFlippedIndex] = useState<number>(-1);
 
     return (
