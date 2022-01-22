@@ -2,7 +2,8 @@ import { createContext } from 'react';
 
 export enum AgendaModes {
     CreateMode = "amCreate",
-    ViewMode = "amView"
+    ViewMode = "amView",
+    AgendaMode = 'amAgenda'
 }
 
 export interface IAgendaContext {

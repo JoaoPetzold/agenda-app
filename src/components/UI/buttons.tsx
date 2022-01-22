@@ -1,14 +1,14 @@
 import { FC, useCallback, useEffect, useState, useRef } from "react";
-import { ButtonCircle, DropDown, DDItem } from ".";
+import { ButtonCircle, DropDown } from ".";
 import { Colors } from "./color";
 
 export type ButtonProps = JSX.IntrinsicElements["button"] & {
     idElement: string;
-    items: Array<any>;
+    icon: any;
     colorx?: Colors;
 };
 
-export const ButtonCircleDropdown : FC<ButtonProps> = ({children, idElement, items, colorx, ...props}) => {
+export const ButtonCircleDropdown : FC<ButtonProps> = ({children, idElement, icon, colorx, ...props}) => {
     const [windowWidth, setWindowWidth] = useState<number>(0);
     const [windowHeight, setWindowHeight] = useState<number>(0);
     const [openDown, setOpenDown] = useState<Boolean>(false);
@@ -44,13 +44,13 @@ export const ButtonCircleDropdown : FC<ButtonProps> = ({children, idElement, ite
         };
     }, [dropdownPosition, ref, setActiveDropdown, activeDropdown, idElement]);
 
-    return (
+    return ( // TODO : Redimensionar dropdown de acordo com o numero de childrens
         <>
             <DropDown ref={ref} colorx={colorx} active={showDropdown} screenPos={{top: windowHeight, left: windowWidth, openDown: openDown}}>
-                {items.map(item => <DDItem key={item.idEvent}>{item.icon}{item.caption}</DDItem>)}
+                {children}
             </DropDown>
             <ButtonCircle id={idElement} colorx={colorx} onClick={props.onClick}> 
-                {children}
+                {icon}
             </ButtonCircle>
         </>
     )

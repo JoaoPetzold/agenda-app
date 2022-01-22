@@ -11,7 +11,6 @@ import { Colors } from '../UI/color';
 
 const EventosNovo = () => {
     const { calendarDate, setAgendaMode } = useContext(AgendaContext);
-    const [eventoAgenda, setEventoAgenda] = useState<number>();
     const [calendarHour, setCalendarHour] = useState<any>();
 
     const submitEventoNovo = useRef<any>(null);

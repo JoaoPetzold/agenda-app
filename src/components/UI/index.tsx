@@ -48,10 +48,13 @@ export const Button = styled.button<StyledProps>`
     font-size: 1.2rem;
     text-align: center;
 
-    &:hover {
+    &:enabled:hover {
         border-top: 0.1rem solid ${(props) => props.theme.Blue};
         cursor: pointer;
         box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(props.theme.Blue, 0.15)};  
+    };
+    &:disabled{
+        color: ${(props) => props.theme.Gray2};
     };
     & > * {
         pointer-events: none;

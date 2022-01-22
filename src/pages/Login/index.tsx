@@ -14,24 +14,31 @@ const Login = ({ setToken } : {setToken : any}) => {
     const [modeRegister, setModeRegister] = useState<boolean>(false);
     const [repeatPassword, setRepeatPassword] = useState<string>('');
 
-    const onSubmit = useMutation((dados) => API(HttpMethod.Post, '/autenticacao', dados));
+    const onSubmitLogin = useMutation((dados) => API(HttpMethod.Post, '/autenticacao', dados));
+    const onSubmitRegister = useMutation((dados) => API(HttpMethod.Post, '/usuario', dados));
     useEffect(() => {
-        if (onSubmit.isSuccess) {
-            setToken(onSubmit.data)
-        } else if (onSubmit.isError) {
-            console.log(onSubmit.error)
+        if (onSubmitLogin.isSuccess) {
+            setToken(onSubmitLogin.data);
+        } else if (onSubmitLogin.isError) {
+            console.log(onSubmitLogin.error);
         };
-    }, [setToken, onSubmit])
+
+        if (onSubmitRegister.isSuccess) {
+            window.location.reload();
+        } else if (onSubmitRegister.isError) {
+            console.log(onSubmitRegister.error);
+        };
+    }, [setToken, onSubmitLogin, onSubmitRegister])
     
 
-    return ( // TODO : REGISTRO -> BOTAO CANCELAR, E REGISTRAR POR MEIO DA API - Criar componente das paginas de login e registro
+    return (
         <>
             {modeRegister ?
                 <RegisterContainer>
                     <Formik 
-                        onSubmit={(values : any) => onSubmit.mutate(values)}
+                        onSubmit={(values : any) => onSubmitRegister.mutate(values)}
                         initialValues={{
-                            NAME: '',
+                            NOME: '',
                             EMAIL: '',
                             SENHA: ''
                         }}
@@ -43,12 +50,15 @@ const Login = ({ setToken } : {setToken : any}) => {
                                     <span style={{width: '100%'}}>Agenda App</span>
                                 </div>
 
-                                <Input name={'NAME'} value={values.NAME} onChange={handleChange} type={'text'} placeholder={'Nome'} style={{gridArea: 'LNAME', width: '80%'}}></Input>
+                                <Input name={'NOME'} value={values.NOME} onChange={handleChange} type={'text'} placeholder={'Nome'} style={{gridArea: 'LNAME', width: '80%'}}></Input>
                                 <Input name={'EMAIL'} value={values.EMAIL} onChange={handleChange} type={'email'} placeholder={'E-Mail'} style={{gridArea: 'LUSER', width: '80%'}}></Input>
                                 <Input name={'SENHA'} value={values.SENHA} onChange={handleChange} type={'password'} placeholder={'Senha'} style={{gridArea: 'LPASS', width: '80%'}}></Input>
                                 <Input value={repeatPassword} onChange={e => setRepeatPassword(e.target.value)} type={'password'} placeholder={'Repita a senha'} style={{gridArea: 'CPASS', width: '80%'}}></Input>
 
-                                <Button disabled={repeatPassword === values.SENHA} type={'submit'} style={{gridArea: 'LBTN'}} colorx={Colors.Blue}>Cadastre-se</Button>
+                                <div style={{gridArea: 'LBTN', display:'flex'}}>
+                                    <Button type={'button'} onClick={e => {setModeRegister(false); setRepeatPassword('')}} style={{width: '50%'}} colorx={Colors.Blue}>Voltar</Button>
+                                    <Button disabled={(repeatPassword === '') || (repeatPassword !== values.SENHA)} type={'submit'} style={{width: '50%'}} colorx={Colors.Blue}>Cadastre-se</Button>
+                                </div>
                             </RegisterForm>
                         )}
                     </Formik>
@@ -56,7 +66,7 @@ const Login = ({ setToken } : {setToken : any}) => {
             :
                 <LoginContainer>
                     <Formik 
-                        onSubmit={(values : any) => onSubmit.mutate(values)}
+                        onSubmit={(values : any) => onSubmitLogin.mutate(values)}
                         initialValues={{
                             EMAIL: '',
                             SENHA: ''
@@ -69,7 +79,6 @@ const Login = ({ setToken } : {setToken : any}) => {
                                     <span style={{width: '100%'}}>Agenda App</span>
                                 </div>
 
-                                {/* <Input name={'NAME'} value={values.NAME} onChange={handleChange} type={'text'} placeholder={'Nome'} style={{gridArea: 'LNAME', width: '80%'}}></Input> */}
                                 <Input name={'EMAIL'} value={values.EMAIL} onChange={handleChange} type={'email'} placeholder={'E-Mail'} style={{gridArea: 'LUSER', width: '80%'}}></Input>
                                 <Input name={'SENHA'} value={values.SENHA} onChange={handleChange} type={'password'} placeholder={'Senha'} style={{gridArea: 'LPASS', width: '80%'}}></Input>
                                 <span id={'cadastro'} onClick={e => setModeRegister(true)} style={{gridArea: 'LSPAN', textAlign: 'right', fontSize: '0.9rem', width: '90%'}}>Não possui uma conta?</span>

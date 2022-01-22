@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const UseToken = () => {
     const getToken = () => {
-        const tokenString = sessionStorage.getItem('token');
+        const tokenString = localStorage.getItem('token');
         return tokenString!;
     };
 
@@ -12,7 +12,7 @@ const UseToken = () => {
         const objLogin = userToken;
 
         if (typeof objLogin !== 'undefined') {
-            sessionStorage.setItem('token', objLogin);
+            localStorage.setItem('token', objLogin);
             setToken(userToken);
         }
     };

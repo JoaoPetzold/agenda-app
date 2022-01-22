@@ -6,6 +6,7 @@ import Navbar from '../../components/Agenda/Navbar';
 import EventosLista from '../../components/Agenda/EventosLista';
 import EventosNovo from '../../components/Agenda/EventosNovo';
 import Calendario from '../../components/Agenda/Calendario';
+import Agendas from '../../components/Agenda/Agendas';
 
 const Agenda = () => {
     const {agendaMode} = useContext(AgendaContext);
@@ -26,7 +27,8 @@ const Agenda = () => {
                     {
                         {
                             [AgendaModes.CreateMode]  : <EventosNovo />,
-                            [AgendaModes.ViewMode]    : <EventosLista />
+                            [AgendaModes.ViewMode]    : <EventosLista />,
+                            [AgendaModes.AgendaMode]  : <Agendas />
                         }[agendaMode]
                     }
                 </EventArea>

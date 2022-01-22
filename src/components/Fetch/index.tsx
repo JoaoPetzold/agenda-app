@@ -5,7 +5,7 @@ export enum HttpMethod {
     Delete  = "DELETE"
 }
 
-const API = async (method: HttpMethod, endpoint: string, values : any) => {
+const API = async (method: HttpMethod, endpoint: string, values : any) => { // TODO : Retirar body quando for GET
     return fetch(process.env.REACT_APP_API + endpoint, {
         method: method,
         headers: {

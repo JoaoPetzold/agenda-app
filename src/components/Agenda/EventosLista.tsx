@@ -1,13 +1,12 @@
 import { format, utcToZonedTime } from 'date-fns-tz';
 import { ColorGroup } from './Utils/Funcoes';
 import { Colors } from '../UI/color';
-import { EventContainer, EventGroup, EventTitle, EventTime, EventDescription, EventControls, AreaContainer, ButtonCircle } from '../UI';
+import { EventContainer, EventGroup, EventTitle, EventTime, EventDescription, EventControls, AreaContainer, ButtonCircle, DDItem } from '../UI';
 import { ButtonCircleDropdown } from "../UI/buttons";
 import { Agendas, EventosDia } from './Utils/Dados';
 import { useContext } from 'react';
 import { AgendaContext, AgendaModes } from '../../contexts/AgendaContext';
-import { FaEllipsisH, FaPlus } from "react-icons/fa";
-import { MenuEventoOpcoes } from "./Utils/Menus";
+import { FaEllipsisH, FaPlus, FaTrashAlt, FaCheck } from 'react-icons/fa';
 
 const EventosLista = () => {
     const {isDarkTheme, flippedIndex, setFlippedIndex, setAgendaMode} = useContext(AgendaContext);
@@ -37,8 +36,9 @@ const EventosLista = () => {
                         <FaPlus />
                     </ButtonCircle>  
                 :
-                    <ButtonCircleDropdown idElement={"btn-event-options"} colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6} items={MenuEventoOpcoes}>
-                        <FaEllipsisH />
+                    <ButtonCircleDropdown idElement={"btn-event-options"} icon={<FaEllipsisH />} colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6}>
+                        <DDItem><FaTrashAlt /> Excluir Evento</DDItem>
+                        <DDItem><FaCheck /> Concluir Evento</DDItem>
                     </ButtonCircleDropdown>
                 }
             </EventControls>
