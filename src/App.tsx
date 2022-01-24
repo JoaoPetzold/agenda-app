@@ -1,5 +1,5 @@
 import './App.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Rotas from './routes';
 import { Background } from './components/UI';
 
@@ -26,17 +26,24 @@ persistQueryClient({
     persistor: localStoragePersistor,
 });
 
-
 function App() {
+    const [mobileRes, setMobileRes] = useState<Boolean>(false);
     const [isDarkTheme, setIsDarkTheme] = useState<Boolean>(false);
+    const [showCalendar, setShowCalendar] = useState<Boolean>(true);
     const [agendaMode, setAgendaMode] = useState<AgendaModes>(AgendaModes.ViewMode);
     const [calendarDate, setCalendarDate] = useState<any>(new Date());
     const [flippedIndex, setFlippedIndex] = useState<number>(-1);
 
+    let widthRes = document.getElementById('root')!.offsetWidth;
+
+    useEffect(() => {
+        widthRes > 600 ? setMobileRes(false) : setMobileRes(true);
+    }, [widthRes, setMobileRes]);
+
     return (
         <Background>
             <QueryClientProvider client={queryDefault}>
-                <AgendaContext.Provider value={{ isDarkTheme, setIsDarkTheme, agendaMode, setAgendaMode, calendarDate, setCalendarDate, flippedIndex, setFlippedIndex }}>
+                <AgendaContext.Provider value={{ mobileRes, setMobileRes, isDarkTheme, setIsDarkTheme, showCalendar, setShowCalendar, agendaMode, setAgendaMode, calendarDate, setCalendarDate, flippedIndex, setFlippedIndex }}>
                     <ThemeProvider theme={isDarkTheme ? ColorSchemeDark : ColorSchemeLight}>
                         <Rotas />
                     </ThemeProvider>

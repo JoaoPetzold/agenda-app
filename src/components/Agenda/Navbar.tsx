@@ -7,14 +7,15 @@ import { FaUserAlt, FaMoon, FaSun } from "react-icons/fa";
 
 import { Logoff } from './Utils/Funcoes';
 import { FaRegAddressBook, FaDoorOpen } from 'react-icons/fa';
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-    const { isDarkTheme, setIsDarkTheme, setAgendaMode } = useContext(AgendaContext);
+    const { isDarkTheme, setIsDarkTheme, setShowCalendar } = useContext(AgendaContext);
 
     return (
         <>
             <ButtonCircleDropdown idElement={"btn-user"} icon={<FaUserAlt />} colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6} >
-                <DDItem onClick={() => setAgendaMode(AgendaModes.AgendaMode)}><FaRegAddressBook /> Minhas Agendas</DDItem>
+                <DDItem onClick={() => setShowCalendar(false)}><Link to={'/'+AgendaModes.AgendaMode}><FaRegAddressBook /> Minhas Agendas</Link></DDItem>
                 <DDItem onClick={() => Logoff()}><FaDoorOpen /> Encerrar Sessão</DDItem>
             </ButtonCircleDropdown>
 

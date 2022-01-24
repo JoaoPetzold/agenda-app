@@ -1,5 +1,6 @@
 import { Formik } from 'formik';
-import { Input, LoginForm, LoginContainer, Button, RegisterContainer, RegisterForm } from "../../components/UI";
+import { Input, Button } from "../../components/UI";
+import { LoginForm, LoginContainer, RegisterContainer, RegisterForm } from "../../components/UI/login";
 import { Colors } from '../../components/UI/color';
 import PropTypes from 'prop-types';
 import { useMutation } from 'react-query';
@@ -29,7 +30,6 @@ const Login = ({ setToken } : {setToken : any}) => {
             console.log(onSubmitRegister.error);
         };
     }, [setToken, onSubmitLogin, onSubmitRegister])
-    
 
     return (
         <>

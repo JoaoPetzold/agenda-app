@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import UseToken from "./UseToken";
 
 import Login from "./pages/Login";
@@ -14,8 +14,10 @@ const Rotas = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Agenda />} />
-                <Route path="*" element={<Agenda />} />
+                <Route path="*" element={<Navigate to={'/'} />} />
+                <Route path="/" element={<Agenda />}>
+                    <Route path=":routerAgendaMode" element={<Agenda />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );

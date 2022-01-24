@@ -2,15 +2,17 @@ import { useContext, useRef, useState } from 'react';
 import { format } from 'date-fns-tz';
 import { ptBR } from 'date-fns/locale';
 import { AgendaContext, AgendaModes } from '../../contexts/AgendaContext';
-import { EventForm, Input, Select, TextArea, Option, AreaContainer, EventControls } from '../UI';
+import { EventForm, AreaContainer, EventControls } from '../UI/agenda';
+import { Input, Select, TextArea, Option } from '../UI';
 import { Agendas } from './Utils/Dados';
 import { Formik } from 'formik';
 import { ButtonCircle } from "../UI";
 import { FaTimes, FaCheck } from "react-icons/fa";
 import { Colors } from '../UI/color';
+import { Link } from 'react-router-dom';
 
 const EventosNovo = () => {
-    const { calendarDate, setAgendaMode } = useContext(AgendaContext);
+    const { calendarDate } = useContext(AgendaContext);
     const [calendarHour, setCalendarHour] = useState<any>();
 
     const submitEventoNovo = useRef<any>(null);
@@ -51,8 +53,10 @@ const EventosNovo = () => {
             </AreaContainer>
 
             <EventControls>
-                <ButtonCircle colorx={Colors.Red} onClick={() => setAgendaMode(AgendaModes.ViewMode)}>
-                    <FaTimes />
+                <ButtonCircle colorx={Colors.Red}>
+                    <Link to={'/'+AgendaModes.ViewMode}>
+                        <FaTimes />
+                    </Link>
                 </ButtonCircle>
 
                 <ButtonCircle type={"submit"} colorx={Colors.Green} onClick={() => submitEventoNovo.current.click()}>

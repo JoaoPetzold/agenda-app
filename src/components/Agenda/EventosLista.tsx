@@ -1,15 +1,17 @@
 import { format, utcToZonedTime } from 'date-fns-tz';
 import { ColorGroup } from './Utils/Funcoes';
 import { Colors } from '../UI/color';
-import { EventContainer, EventGroup, EventTitle, EventTime, EventDescription, EventControls, AreaContainer, ButtonCircle, DDItem } from '../UI';
+import { EventContainer, EventGroup, EventTitle, EventTime, EventDescription, EventControls, AreaContainer } from '../UI/agenda';
+import { ButtonCircle, DDItem } from '../UI';
 import { ButtonCircleDropdown } from "../UI/buttons";
 import { Agendas, EventosDia } from './Utils/Dados';
 import { useContext } from 'react';
 import { AgendaContext, AgendaModes } from '../../contexts/AgendaContext';
 import { FaEllipsisH, FaPlus, FaTrashAlt, FaCheck } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const EventosLista = () => {
-    const {isDarkTheme, flippedIndex, setFlippedIndex, setAgendaMode} = useContext(AgendaContext);
+    const { isDarkTheme, flippedIndex, setFlippedIndex } = useContext(AgendaContext);
 
     const toggleFlippedIndex = (cd_evento : number) => {
         setFlippedIndex(flippedIndex === cd_evento ? -1 : cd_evento);
@@ -32,8 +34,10 @@ const EventosLista = () => {
             
             <EventControls>
                 {flippedIndex === -1 ?
-                    <ButtonCircle colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6} onClick={() => setAgendaMode(AgendaModes.CreateMode)}>
-                        <FaPlus />
+                    <ButtonCircle colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6}>
+                        <Link to={'/'+AgendaModes.CreateMode}>
+                            <FaPlus />
+                        </Link>
                     </ButtonCircle>  
                 :
                     <ButtonCircleDropdown idElement={"btn-event-options"} icon={<FaEllipsisH />} colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6}>

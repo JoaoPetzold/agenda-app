@@ -46,7 +46,7 @@ export const ButtonCircleDropdown : FC<ButtonProps> = ({children, idElement, ico
 
     return ( // TODO : Redimensionar dropdown de acordo com o numero de childrens
         <>
-            <DropDown ref={ref} colorx={colorx} active={showDropdown} screenPos={{top: windowHeight, left: windowWidth, openDown: openDown}}>
+            <DropDown ref={ref} colorx={colorx} active={showDropdown} onClick={() => setShowDropdown(false)} screenPos={{top: windowHeight, left: windowWidth, openDown: openDown}}>
                 {children}
             </DropDown>
             <ButtonCircle id={idElement} colorx={colorx} onClick={props.onClick}> 

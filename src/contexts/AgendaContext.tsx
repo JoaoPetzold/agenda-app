@@ -1,15 +1,21 @@
 import { createContext } from 'react';
 
 export enum AgendaModes {
-    CreateMode = "amCreate",
-    ViewMode = "amView",
-    AgendaMode = 'amAgenda'
+    CreateMode  = "amCreate",
+    ViewMode    = "amView",
+    AgendaMode  = 'amAgenda'
 }
 
 export interface IAgendaContext {
+    mobileRes           : Boolean;
+    setMobileRes?       : any;
+
     isDarkTheme         : Boolean;
     setIsDarkTheme?     : any;
-    
+
+    showCalendar        : Boolean;
+    setShowCalendar?    : any;
+
     agendaMode          : AgendaModes;
     setAgendaMode?      : any;
 
@@ -21,7 +27,9 @@ export interface IAgendaContext {
 };
 
 const defaultValue = {
+    mobileRes       : false,
     isDarkTheme     : false,
+    showCalendar    : true,
     agendaMode      : AgendaModes.ViewMode,
     calendarDate    : new Date(),
     flippedIndex    : -1
