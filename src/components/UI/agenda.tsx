@@ -290,7 +290,7 @@ export const EventContainer = styled.div<StyledProps>`
     user-select: none;
 
     color: ${(props) => props.theme.Contrast};
-    background-color: ${(props) => rgba(props.theme[props.colorx!], 0.5)};
+    background-color: ${(props) => rgba(props.theme[props.colorPrimary!], 0.5)};
     background-attachment: local, local, scroll, scroll;
 
     &:hover {
@@ -327,7 +327,7 @@ export const EventGroup = styled.div<StyledProps>`
 
     border-radius: 5rem 0 0 5rem;
 
-    background-color: ${(props) => rgba(props.theme[props.colorx!], 1)};
+    background-color: ${(props) => rgba(props.theme[props.colorPrimary!], 1)};
 
     @media(max-width: 600px) {
         width: 0.6rem;
@@ -457,7 +457,7 @@ export const AgendaItemContainer = styled.div<StyledProps>`
     user-select: none;
 
     color: ${(props) => props.theme.Contrast};
-    background-color: ${(props) => rgba(props.theme[props.colorx!], 0.5)};
+    background-color: ${(props) => rgba(props.theme[props.colorPrimary!], 0.5)};
     background-attachment: local, local, scroll, scroll;
 
     &:hover {
@@ -466,6 +466,42 @@ export const AgendaItemContainer = styled.div<StyledProps>`
     };
     @media(max-width: 600px) {
         width: 95%;
+    };
+`;
+
+export const AgendaForm = styled.form<StyledProps>`
+    grid-area: EVP;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 10% 3.5rem auto;
+    grid-template-areas: 
+        "AFT AFT"
+        "AFN AFN"
+        "AFC AFP";
+    
+    align-content: flex-start;
+
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem 0.5rem 0.5rem 2.0rem;
+    margin: 0.15rem;
+    color: ${(props) => props.theme.Contrast};
+
+    span {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 1rem;
+        text-align: center;
+        width: 100%;
+    };
+    
+    @media(max-width: 600px) {
+        font-size: 1.15rem;
+        justify-content: center;
+        padding: 0.75rem;
+        margin: 0;
+
+        span{font-size: 1.15rem};        
     };
 `;
     // ---- Fim Agendas ---- //

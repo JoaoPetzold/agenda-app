@@ -53,13 +53,13 @@ const EventosNovo = () => {
             </AreaContainer>
 
             <EventControls>
-                <ButtonCircle colorx={Colors.Red}>
-                    <Link to={'/'+AgendaModes.ViewMode}>
+                <ButtonCircle colorPrimary={Colors.Red}>
+                    <Link to={'/'+AgendaModes.ViewEventMode}>
                         <FaTimes />
                     </Link>
                 </ButtonCircle>
 
-                <ButtonCircle type={"submit"} colorx={Colors.Green} onClick={() => submitEventoNovo.current.click()}>
+                <ButtonCircle type={"submit"} colorPrimary={Colors.Green} onClick={() => submitEventoNovo.current.click()}>
                     <FaCheck />
                 </ButtonCircle>
             </EventControls>

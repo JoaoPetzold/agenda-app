@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Colors } from "./color";
 import { rgba } from 'polished';
 
@@ -6,17 +6,53 @@ export interface screenPosition {
     left: number;
     top: number;
     openDown: Boolean;
-}
+};
 
 export interface StyledProps {
     idElement?: string;
-    colorx?: Colors;
-    active?: Boolean;
 
+    colorPrimary?: Colors;
+    alphaPrimary?: number;
+    colorSecondary?: Colors;
+
+    active?: Boolean;
     screenPos?: screenPosition;
     invisible?: Boolean;
     showDisplay?: Boolean;
 };
+
+export const baseFunctions = css<StyledProps>`
+    ${(props) => props.invisible   ? `visibility: hidden` : `visibility: visible`};
+    ${(props) => props.showDisplay ? `display: none` : `display: block`};
+
+    border: none;
+    border-radius: 0.5rem;
+
+    background-color: ${(props) =>  typeof props.colorPrimary === 'undefined' ? rgba(props.theme.Gray6, 1) : rgba(props.theme[props.colorPrimary], props.alphaPrimary!)};
+    color: ${(props) => typeof props.colorSecondary === 'undefined' ? props.theme[Colors.Contrast] : props.theme[props.colorSecondary!]};
+
+    &:enabled:hover {
+        cursor: pointer;
+        box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(props.theme.Blue, 0.15)};  
+    };
+    &:disabled{
+        color: ${(props) => props.theme.Gray2};
+    };
+`;
+
+export const baseInput = css`
+    outline: 0.1rem solid ${(props) => props.theme.Gray3};
+
+    min-height: 2rem;
+    max-width: 100%;
+
+    &:enabled:focus {
+        outline: 0.15rem solid ${(props) => props.theme.Blue};
+        outline-offset: 0.1rem;
+        box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(props.theme.Blue, 0.15)}; 
+    };
+`;
+
 
 export const Background = styled.div`
     display: flex;
@@ -40,7 +76,7 @@ export const Button = styled.button<StyledProps>`
     max-width: 100%;
     max-height: 100%;
 
-    color: ${(props) => props.theme[props.colorx!]};
+    color: ${(props) => props.theme[props.colorPrimary!]};
     background-color:  ${(props) => rgba(props.theme.Gray6, 0.25)};
 
     border: none;
@@ -68,7 +104,7 @@ export const ButtonCircle = styled.button<StyledProps>`
     width: 2.2rem;
     height: 2.2rem;
 
-    background-color: ${(props) => props.theme[props.colorx!]};
+    background-color: ${(props) => props.theme[props.colorPrimary!]};
     border: none;
     font-size: 1.2rem;
     text-align: center;

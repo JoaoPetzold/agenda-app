@@ -10,7 +10,7 @@ import { AgendaContext, AgendaModes } from '../../contexts/AgendaContext';
 import { FaRegCalendarAlt, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-const Agendas = () => {
+const AgendasLista = () => {
     const { isDarkTheme } = useContext(AgendaContext);
     const qryAgenda = useQuery('/agenda', () => API(HttpMethod.Get, '/agenda', ''));
     const dsAgenda = useMemo(() => qryAgenda.isLoading || qryAgenda.isError ? [] : [...qryAgenda.data], [qryAgenda]);
@@ -21,8 +21,8 @@ const Agendas = () => {
                 <AreaTitle>Minhas Agendas</AreaTitle>
                 {
                     dsAgenda.map((item : any) => 
-                        <AgendaItemContainer key={item.CD_AGENDA} colorx={Colors.Gray6} onClick={() => null} active={false}>
-                            <EventGroup colorx={item.COR as Colors} />
+                        <AgendaItemContainer key={item.CD_AGENDA} colorPrimary={Colors.Gray6} onClick={() => null} active={false}>
+                            <EventGroup colorPrimary={item.COR as Colors} />
                             <EventTitle>{item.NOME}</EventTitle>
                         </AgendaItemContainer>
                     )
@@ -30,14 +30,16 @@ const Agendas = () => {
             </AreaContainer>
             
             <EventControls>
-                    <ButtonCircle colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6}>
-                        <Link to={'/'+AgendaModes.ViewMode}>
+                    <ButtonCircle colorPrimary={isDarkTheme ? Colors.Gray3 : Colors.Gray6}>
+                        <Link to={'/'+AgendaModes.ViewEventMode}>
                             <FaTimes />
                         </Link>
                     </ButtonCircle>  
 
-                    <ButtonCircle colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6} onClick={() => {}}>
-                        <FaRegCalendarAlt />
+                    <ButtonCircle colorPrimary={isDarkTheme ? Colors.Gray3 : Colors.Gray6} onClick={() => {}}>
+                        <Link to={'/'+AgendaModes.CreateAgendasMode}>
+                            <FaRegCalendarAlt />
+                        </Link>
                     </ButtonCircle>  
             </EventControls>
 
@@ -45,4 +47,4 @@ const Agendas = () => {
     );
 };
 
-export default Agendas;
+export default AgendasLista;

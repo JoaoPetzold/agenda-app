@@ -6,8 +6,9 @@ import Navbar from '../../components/Agenda/Navbar';
 import EventosLista from '../../components/Agenda/EventosLista';
 import EventosNovo from '../../components/Agenda/EventosNovo';
 import Calendario from '../../components/Agenda/Calendario';
-import Agendas from '../../components/Agenda/Agendas';
+import Agendas from '../../components/Agenda/AgendasLista';
 import { useParams } from 'react-router-dom';
+import AgendasNovo from '../../components/Agenda/AgendasNovo';
 
 const Agenda = () => {
     const { routerAgendaMode } = useParams();
@@ -16,7 +17,7 @@ const Agenda = () => {
     useEffect(() => {
         if (Object.values(AgendaModes).some((i : string) => i === routerAgendaMode)) {
             setAgendaMode(routerAgendaMode);
-        } else { setAgendaMode(AgendaModes.ViewMode) };
+        } else { setAgendaMode(AgendaModes.ViewEventMode) };
     },[routerAgendaMode, setAgendaMode])
 
     return (
@@ -39,9 +40,10 @@ const Agenda = () => {
                 <EventArea>
                     {
                         {
-                            [AgendaModes.CreateMode]  : <EventosNovo />,
-                            [AgendaModes.ViewMode]    : <EventosLista />,
-                            [AgendaModes.AgendaMode]  : <Agendas />
+                            [AgendaModes.CreateEventMode]   : <EventosNovo />,
+                            [AgendaModes.ViewEventMode]     : <EventosLista />,
+                            [AgendaModes.CreateAgendasMode] : <AgendasNovo />,
+                            [AgendaModes.ViewAgendasMode]   : <Agendas />
                         }[agendaMode]
                     }                
                 </EventArea>

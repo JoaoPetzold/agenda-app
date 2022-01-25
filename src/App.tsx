@@ -30,7 +30,7 @@ function App() {
     const [mobileRes, setMobileRes] = useState<Boolean>(false);
     const [isDarkTheme, setIsDarkTheme] = useState<Boolean>(false);
     const [showCalendar, setShowCalendar] = useState<Boolean>(true);
-    const [agendaMode, setAgendaMode] = useState<AgendaModes>(AgendaModes.ViewMode);
+    const [agendaMode, setAgendaMode] = useState<AgendaModes>(AgendaModes.ViewEventMode);
     const [calendarDate, setCalendarDate] = useState<any>(new Date());
     const [flippedIndex, setFlippedIndex] = useState<number>(-1);
 

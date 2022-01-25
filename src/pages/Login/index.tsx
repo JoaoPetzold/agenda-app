@@ -56,8 +56,8 @@ const Login = ({ setToken } : {setToken : any}) => {
                                 <Input value={repeatPassword} onChange={e => setRepeatPassword(e.target.value)} type={'password'} placeholder={'Repita a senha'} style={{gridArea: 'CPASS', width: '80%'}}></Input>
 
                                 <div style={{gridArea: 'LBTN', display:'flex'}}>
-                                    <Button type={'button'} onClick={e => {setModeRegister(false); setRepeatPassword('')}} style={{width: '50%'}} colorx={Colors.Blue}>Voltar</Button>
-                                    <Button disabled={(repeatPassword === '') || (repeatPassword !== values.SENHA)} type={'submit'} style={{width: '50%'}} colorx={Colors.Blue}>Cadastre-se</Button>
+                                    <Button type={'button'} onClick={e => {setModeRegister(false); setRepeatPassword('')}} style={{width: '50%'}} colorPrimary={Colors.Blue}>Voltar</Button>
+                                    <Button disabled={(repeatPassword === '') || (repeatPassword !== values.SENHA)} type={'submit'} style={{width: '50%'}} colorPrimary={Colors.Blue}>Cadastre-se</Button>
                                 </div>
                             </RegisterForm>
                         )}
@@ -83,7 +83,7 @@ const Login = ({ setToken } : {setToken : any}) => {
                                 <Input name={'SENHA'} value={values.SENHA} onChange={handleChange} type={'password'} placeholder={'Senha'} style={{gridArea: 'LPASS', width: '80%'}}></Input>
                                 <span id={'cadastro'} onClick={e => setModeRegister(true)} style={{gridArea: 'LSPAN', textAlign: 'right', fontSize: '0.9rem', width: '90%'}}>Não possui uma conta?</span>
 
-                                <Button type={'submit'} style={{gridArea: 'LBTN'}} colorx={Colors.Blue}>Entrar</Button>
+                                <Button type={'submit'} style={{gridArea: 'LBTN'}} colorPrimary={Colors.Blue}>Entrar</Button>
                             </LoginForm>
                         )}
                     </Formik>

@@ -21,24 +21,24 @@ export enum Colors {
 }
 
 export const ColorSchemeLight = {
-    Red:       '#ff3b30',
-    Orange:    '#ff9500',
-    Yellow:    '#ffcc00',
-    Green:     '#34c759',
-    Mint:      '#00c7be',
-    Teal:      '#30b0c7',
-    Cyan:      '#32ade6',
-    Blue:      '#007bff',
-    Indigo:    '#5856d8',
-    Purple:    '#af52de',
-    Pink:      '#ff2d54',
-    Brown:     '#a2845e',
-    Gray1:     '#8e8e93',
-    Gray2:     '#aeaeb2',
-    Gray3:     '#c7c7cc',
-    Gray4:     '#d1d1d6',
-    Gray5:     '#e5e5ea',
-    Gray6:     '#f2f2f2',
+    Red:       '#FF3B30',
+    Orange:    '#FF9500',
+    Yellow:    '#FFCC00',
+    Green:     '#34C759',
+    Mint:      '#00C7BE',
+    Teal:      '#30B0C7',
+    Cyan:      '#32ADE6',
+    Blue:      '#007Bff',
+    Indigo:    '#5856D8',
+    Purple:    '#AF52DE',
+    Pink:      '#FF2D54',
+    Brown:     '#A2845E',
+    Gray1:     '#8E8E93',
+    Gray2:     '#AEAEB2',
+    Gray3:     '#C7C7CC',
+    Gray4:     '#D1D1D6',
+    Gray5:     '#E5E5EA',
+    Gray6:     '#F2F2F2',
     Contrast:  '#1D1D1F'
 }
 
@@ -63,3 +63,18 @@ export const ColorSchemeDark = {
     Gray6:     '#1C1C1E',
     Contrast:  '#FFFFFF' 
 }
+
+export const ColorPicker = [
+    {id : 'Red'},
+    {id : 'Orange'},
+    {id : 'Yellow'},
+    {id : 'Green'},
+    {id : 'Mint'},
+    {id : 'Teal'},
+    {id : 'Cyan'},
+    {id : 'Blue'},
+    {id : 'Indigo'},
+    {id : 'Purple'},
+    {id : 'Pink'},
+    {id : 'Brown'}
+]

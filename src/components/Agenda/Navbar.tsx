@@ -14,12 +14,12 @@ const Navbar = () => {
 
     return (
         <>
-            <ButtonCircleDropdown idElement={"btn-user"} icon={<FaUserAlt />} colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6} >
-                <DDItem onClick={() => setShowCalendar(false)}><Link to={'/'+AgendaModes.AgendaMode}><FaRegAddressBook /> Minhas Agendas</Link></DDItem>
+            <ButtonCircleDropdown idElement={"btn-user"} icon={<FaUserAlt />} colorPrimary={isDarkTheme ? Colors.Gray3 : Colors.Gray6} >
+                <DDItem onClick={() => setShowCalendar(false)}><Link to={'/'+AgendaModes.ViewAgendasMode}><FaRegAddressBook /> Minhas Agendas</Link></DDItem>
                 <DDItem onClick={() => Logoff()}><FaDoorOpen /> Encerrar Sessão</DDItem>
             </ButtonCircleDropdown>
 
-            <ButtonCircle colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6} onClick={() => setIsDarkTheme(!isDarkTheme)}>
+            <ButtonCircle colorPrimary={isDarkTheme ? Colors.Gray3 : Colors.Gray6} onClick={() => setIsDarkTheme(!isDarkTheme)}>
                 {isDarkTheme ? <FaMoon /> : <FaSun />}
             </ButtonCircle>
         </>

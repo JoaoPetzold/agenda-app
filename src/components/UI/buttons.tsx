@@ -5,10 +5,10 @@ import { Colors } from "./color";
 export type ButtonProps = JSX.IntrinsicElements["button"] & {
     idElement: string;
     icon: any;
-    colorx?: Colors;
+    colorPrimary?: Colors;
 };
 
-export const ButtonCircleDropdown : FC<ButtonProps> = ({children, idElement, icon, colorx, ...props}) => {
+export const ButtonCircleDropdown : FC<ButtonProps> = ({children, idElement, icon, colorPrimary, ...props}) => {
     const [windowWidth, setWindowWidth] = useState<number>(0);
     const [windowHeight, setWindowHeight] = useState<number>(0);
     const [openDown, setOpenDown] = useState<Boolean>(false);
@@ -46,10 +46,10 @@ export const ButtonCircleDropdown : FC<ButtonProps> = ({children, idElement, ico
 
     return ( // TODO : Redimensionar dropdown de acordo com o numero de childrens
         <>
-            <DropDown ref={ref} colorx={colorx} active={showDropdown} onClick={() => setShowDropdown(false)} screenPos={{top: windowHeight, left: windowWidth, openDown: openDown}}>
+            <DropDown ref={ref} colorPrimary={colorPrimary} active={showDropdown} onClick={() => setShowDropdown(false)} screenPos={{top: windowHeight, left: windowWidth, openDown: openDown}}>
                 {children}
             </DropDown>
-            <ButtonCircle id={idElement} colorx={colorx} onClick={props.onClick}> 
+            <ButtonCircle id={idElement} colorPrimary={colorPrimary} onClick={props.onClick}> 
                 {icon}
             </ButtonCircle>
         </>

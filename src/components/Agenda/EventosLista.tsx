@@ -22,8 +22,8 @@ const EventosLista = () => {
             <AreaContainer>
                 {
                     EventosDia.map(item => 
-                        <EventContainer key={item.CD_EVENTO} colorx={Colors.Gray6} onClick={() => toggleFlippedIndex(item.CD_EVENTO)} active={flippedIndex === item.CD_EVENTO}>
-                            <EventGroup colorx={Colors[ColorGroup(Agendas, item.CD_AGENDA)]} />
+                        <EventContainer key={item.CD_EVENTO} colorPrimary={Colors.Gray6} onClick={() => toggleFlippedIndex(item.CD_EVENTO)} active={flippedIndex === item.CD_EVENTO}>
+                            <EventGroup colorPrimary={Colors[ColorGroup(Agendas, item.CD_AGENDA)]} />
                             <EventTitle>{item.EVENTO}</EventTitle>
                             <EventTime>{format(utcToZonedTime(new Date(item.DATA), 'America/Sao_Paulo'), 'HH:mm')}</EventTime>
                             <EventDescription active={flippedIndex === item.CD_EVENTO}>{item.DESCRICAO}</EventDescription>
@@ -34,13 +34,13 @@ const EventosLista = () => {
             
             <EventControls>
                 {flippedIndex === -1 ?
-                    <ButtonCircle colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6}>
-                        <Link to={'/'+AgendaModes.CreateMode}>
+                    <ButtonCircle colorPrimary={isDarkTheme ? Colors.Gray3 : Colors.Gray6}>
+                        <Link to={'/'+AgendaModes.CreateEventMode}>
                             <FaPlus />
                         </Link>
                     </ButtonCircle>  
                 :
-                    <ButtonCircleDropdown idElement={"btn-event-options"} icon={<FaEllipsisH />} colorx={isDarkTheme ? Colors.Gray3 : Colors.Gray6}>
+                    <ButtonCircleDropdown idElement={"btn-event-options"} icon={<FaEllipsisH />} colorPrimary={isDarkTheme ? Colors.Gray3 : Colors.Gray6}>
                         <DDItem><FaTrashAlt /> Excluir Evento</DDItem>
                         <DDItem><FaCheck /> Concluir Evento</DDItem>
                     </ButtonCircleDropdown>
