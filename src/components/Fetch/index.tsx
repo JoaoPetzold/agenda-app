@@ -6,6 +6,9 @@ export enum HttpMethod {
 }
 
 const API = async (method: HttpMethod, endpoint: string, values : any) => {
+    let errors = false;
+    let returnValue;
+
     if (method === HttpMethod.Get || method === HttpMethod.Delete) {
         return fetch(process.env.REACT_APP_API + endpoint, {
             method: method,
@@ -18,9 +21,16 @@ const API = async (method: HttpMethod, endpoint: string, values : any) => {
         })
         .then(data => {
             if(!data.ok) {
-                throw new Error(data.statusText);
+                errors = true;
             }
             return data.json();
+        })
+        .then((response) => {
+            if(errors) {
+                returnValue = response;
+                throw new Error(JSON.stringify(returnValue));
+            }
+            return response;
         })
         .catch(err => {throw new Error(err)})
     } else {
@@ -36,9 +46,16 @@ const API = async (method: HttpMethod, endpoint: string, values : any) => {
         })
         .then(data => {
             if(!data.ok) {
-                throw new Error(data.statusText);
+                errors = true;
             }
             return data.json();
+        })
+        .then((response) => {
+            if(errors) {
+                returnValue = response;
+                throw new Error(JSON.stringify(returnValue));
+            };
+            return response;
         })
         .catch(err => {throw new Error(err)})
     };

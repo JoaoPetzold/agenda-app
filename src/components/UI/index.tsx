@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { Colors } from "./color";
 import { rgba } from 'polished';
 
@@ -10,6 +10,7 @@ export interface screenPosition {
 
 export interface StyledProps {
     idElement?: string;
+    variant?: string;
 
     colorPrimary?: Colors;
     alphaPrimary?: number;
@@ -28,9 +29,6 @@ export const baseFunctions = css<StyledProps>`
     border: none;
     border-radius: 0.5rem;
 
-    background-color: ${(props) =>  typeof props.colorPrimary === 'undefined' ? rgba(props.theme.Gray6, 1) : rgba(props.theme[props.colorPrimary], props.alphaPrimary!)};
-    color: ${(props) => typeof props.colorSecondary === 'undefined' ? props.theme[Colors.Contrast] : props.theme[props.colorSecondary!]};
-
     &:enabled:hover {
         cursor: pointer;
         box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(props.theme.Blue, 0.15)};  
@@ -38,6 +36,11 @@ export const baseFunctions = css<StyledProps>`
     &:disabled{
         color: ${(props) => props.theme.Gray2};
     };
+`;
+
+export const baseColors = css<StyledProps>`
+    background-color: ${(props) =>  typeof props.colorPrimary === 'undefined' ? rgba(props.theme.Gray6, 1) : rgba(props.theme[props.colorPrimary], props.alphaPrimary!)};
+    color: ${(props) => typeof props.colorSecondary === 'undefined' ? props.theme[Colors.Contrast] : props.theme[props.colorSecondary!]};
 `;
 
 export const baseInput = css`
@@ -51,6 +54,32 @@ export const baseInput = css`
         outline-offset: 0.1rem;
         box-shadow: 0px 0px 0.4rem 0.1rem ${(props) => rgba(props.theme.Blue, 0.15)}; 
     };
+`;
+
+export const transitionColor = (primary: any, secondary: any) => keyframes`
+    from {
+        background-color: ${primary};
+        background-position: 100% 100%;
+    }
+    to {
+        background-color: ${secondary};
+        background-position: 0% 0%;
+    }
+`;
+
+export const transitionScaleUp = (originalSize: any, multiplier: number) => keyframes`
+    0% {
+        transform:scaleY(1);
+        transform-origin: 100% 0;
+    }
+    99% {
+        transform:scaleY(${multiplier});
+        transform-origin: 100% 0;
+        transform:scaleY(1);
+    }
+    100% {
+        height:calc(${originalSize} * ${multiplier});
+    }
 `;
 
 
@@ -154,7 +183,11 @@ export const DropDown = styled.div<StyledProps>`
     width: var(--vWidth);
     height: var(--vHeight);
 
-    padding: 0.5rem;
+    ${(props) => props.variant === 'custom' ?
+        `padding: 0;`
+    :
+        `padding: 0.5rem;`
+    };
 
     left: calc(${(props) => props.screenPos!?.left}px - var(--vWidth) / 2);
     top: ${(props) => props.screenPos!?.openDown ?
@@ -215,6 +248,8 @@ export const DDItem = styled.div<StyledProps>`
 `;
 
 export const Label = styled.label<StyledProps>`
+    font-size: 1rem;
+    color: ${(props) => props.theme[props.colorPrimary!]};
 `;
 
 export const Input = styled.input<StyledProps>`

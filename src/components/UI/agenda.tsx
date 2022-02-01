@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { rgba, animation } from 'polished';
-import { StyledProps } from "./index";
+import styled, {css} from "styled-components";
+import { rgba } from 'polished';
+import { StyledProps, transitionColor, transitionScaleUp } from "./index";
 
 // ---- Agenda ---- // 
 
@@ -212,13 +212,15 @@ export const EventArea = styled.div<StyledProps>`
     grid-area: a;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 90% auto;
+    grid-template-rows: minmax(0, 90%) auto;
     grid-template-areas: 
         "EVP"
         "EVC";
 
     width: 100%;
     height: 100%;
+    min-height: 0;
+    min-width: 0; 
 
     @media(max-width: 600px) {
         grid-template-rows: 80% auto;
@@ -300,19 +302,13 @@ export const EventContainer = styled.div<StyledProps>`
 
     &:active {
         @media(min-width: 600px) {
-            ${(props) => props.active ? (props.active = false) : animation(['scale-open', '0.1s', 'cubic-bezier(0.390, 0.575, 0.565, 1.000)', 'both'])};
+            ${(props) => props.active ?
+                (props.active = false) 
+            : 
+                css`
+                    animation: ${transitionScaleUp('3.5rem', 2.7)} 0.1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both
+                `
         };
-    };
-
-    @keyframes scale-open {
-        0% {
-            transform:scaleY(1);
-            transform-origin: 100% 0;
-        }
-        100% {
-            transform:scaleY(2.7);
-            transform-origin: 100% 0;
-        }
     };
     
     @media(max-width: 600px) {
@@ -447,6 +443,16 @@ export const NavbarContainer = styled.div<StyledProps>`
 
     // ---- Agendas ---- //
 export const AgendaItemContainer = styled.div<StyledProps>`
+    ${(props) => props.active ? 
+        `
+            background-color: ${rgba(props.theme[props.colorSecondary!], 1)};
+        `
+    :
+        `
+            background-color: ${rgba(props.theme[props.colorPrimary!], 0.5)};
+        `
+    };
+
     height: 3.5rem;
     display: flex;
     align-items: center;
@@ -457,8 +463,21 @@ export const AgendaItemContainer = styled.div<StyledProps>`
     user-select: none;
 
     color: ${(props) => props.theme.Contrast};
-    background-color: ${(props) => rgba(props.theme[props.colorPrimary!], 0.5)};
     background-attachment: local, local, scroll, scroll;
+
+    &:active {
+        @media(min-width: 600px) {
+            ${(props) => props.active ?
+                (props.active = false) 
+            : 
+                css`
+                background: linear-gradient(90deg, ${rgba(props.theme[props.colorSecondary!], 1)} 0%, ${rgba(props.theme[props.colorPrimary!], 0.5)} 20%);
+                background-size: 150%, 150%;
+                animation: ${transitionColor(props.colorPrimary!, props.colorSecondary!)} 0.1s ease both
+                `
+            };            
+        };
+    };
 
     &:hover {
         cursor: pointer;
@@ -472,28 +491,20 @@ export const AgendaItemContainer = styled.div<StyledProps>`
 export const AgendaForm = styled.form<StyledProps>`
     grid-area: EVP;
     display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 10% 3.5rem auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10% 3.5rem 10rem auto;
     grid-template-areas: 
-        "AFT AFT"
-        "AFN AFN"
-        "AFC AFP";
+        "AFT"
+        "AFN"
+        "AFC"
+        "PRW";
     
     align-content: flex-start;
 
     width: 100%;
     height: 100%;
-    padding: 0.5rem 0.5rem 0.5rem 2.0rem;
-    margin: 0.15rem;
+    padding: 0.75rem 0.5rem 0.75rem 2rem;
     color: ${(props) => props.theme.Contrast};
-
-    span {
-        text-transform: uppercase;
-        font-weight: bold;
-        font-size: 1rem;
-        text-align: center;
-        width: 100%;
-    };
     
     @media(max-width: 600px) {
         font-size: 1.15rem;
@@ -505,4 +516,13 @@ export const AgendaForm = styled.form<StyledProps>`
     };
 `;
     // ---- Fim Agendas ---- //
+
+export const SpanTitle = styled.span`
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: center;
+    width: 100%;
+`;
+
 // ---- Fim Agenda ---- //

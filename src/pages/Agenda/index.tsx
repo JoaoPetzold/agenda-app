@@ -6,13 +6,13 @@ import Navbar from '../../components/Agenda/Navbar';
 import EventosLista from '../../components/Agenda/EventosLista';
 import EventosNovo from '../../components/Agenda/EventosNovo';
 import Calendario from '../../components/Agenda/Calendario';
-import Agendas from '../../components/Agenda/AgendasLista';
+import AgendasLista from '../../components/Agenda/AgendasLista';
 import { useParams } from 'react-router-dom';
 import AgendasNovo from '../../components/Agenda/AgendasNovo';
 
 const Agenda = () => {
     const { routerAgendaMode } = useParams();
-    const {agendaMode, setAgendaMode, showCalendar, mobileRes} = useContext(AgendaContext);
+    const { agendaMode, setAgendaMode, showCalendar, mobileRes } = useContext(AgendaContext);
 
     useEffect(() => {
         if (Object.values(AgendaModes).some((i : string) => i === routerAgendaMode)) {
@@ -43,7 +43,7 @@ const Agenda = () => {
                             [AgendaModes.CreateEventMode]   : <EventosNovo />,
                             [AgendaModes.ViewEventMode]     : <EventosLista />,
                             [AgendaModes.CreateAgendasMode] : <AgendasNovo />,
-                            [AgendaModes.ViewAgendasMode]   : <Agendas />
+                            [AgendaModes.ViewAgendasMode]   : <AgendasLista />
                         }[agendaMode]
                     }                
                 </EventArea>

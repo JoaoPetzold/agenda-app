@@ -8,3 +8,7 @@ export const Logoff = () => {
     localStorage.removeItem('token');
     window.location.reload();
 }
+
+export const RandomizeArray = (arr : any) => {
+    return arr[Math.floor(Math.random()*arr.length)];
+}

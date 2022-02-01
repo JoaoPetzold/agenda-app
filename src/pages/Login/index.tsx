@@ -17,6 +17,7 @@ const Login = ({ setToken } : {setToken : any}) => {
 
     const onSubmitLogin = useMutation((dados) => API(HttpMethod.Post, '/autenticacao', dados));
     const onSubmitRegister = useMutation((dados) => API(HttpMethod.Post, '/usuario', dados));
+    
     useEffect(() => {
         if (onSubmitLogin.isSuccess) {
             setToken(onSubmitLogin.data);

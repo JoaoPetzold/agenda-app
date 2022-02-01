@@ -1,47 +1,65 @@
-import { useContext, useRef } from 'react';
-import { AgendaContext, AgendaModes } from '../../contexts/AgendaContext';
-import { AgendaForm, AreaContainer, EventControls } from '../UI/agenda';
-import { Input } from '../UI';
+import { useRef, useState, useEffect } from 'react';
+import { AgendaModes } from '../../contexts/AgendaContext';
+import { AgendaForm, AreaContainer, AgendaItemContainer, EventControls, EventGroup, EventTitle, SpanTitle } from '../UI/agenda';
+import { Input, ButtonCircle } from '../UI';
 import { Formik } from 'formik';
-import { ButtonCircle } from "../UI";
-import { FaTimes, FaCheck, FaEyeDropper } from "react-icons/fa";
-import { Colors } from '../UI/color';
-import { Link } from 'react-router-dom';
-import { ButtonCircleDropdown } from '../UI/buttons';
-import { VerticalList } from '../UI/lists';
+import { FaTimes, FaCheck } from "react-icons/fa";
+import { Colors, ColorPicker } from '../UI/color';
+import { Link, useNavigate } from 'react-router-dom';
+import { VerticalList, ListItem } from '../UI/lists';
+import { RandomizeArray } from './Utils/Funcoes';
+import { useMutation } from 'react-query';
+import API, { HttpMethod } from '../Fetch';
 
 const AgendasNovo = () => {
+    const navigate = useNavigate();
     const submitEventoNovo = useRef<any>(null);
+    const [randomColor] = useState<Colors>(RandomizeArray(ColorPicker)['id'] as Colors);
+    const [activePreview, setActivePreview] = useState<Boolean>(false);
+
+    const onSubmitAgenda = useMutation((dados) => API(HttpMethod.Post, '/agenda', dados));
+
+    useEffect(() => {
+        if (onSubmitAgenda.isSuccess) {
+            navigate('/'+AgendaModes.ViewAgendasMode);
+        } else if (onSubmitAgenda.isError) {
+            console.log(onSubmitAgenda.error);
+        };
+    }, [onSubmitAgenda, navigate])
 
     return (
         <>
             <AreaContainer>
                 <Formik 
-                    onSubmit={(values : any) => {console.log(values)}}
+                    onSubmit={(values : any) => {console.log(values); onSubmitAgenda.mutate(values)}}
                     initialValues={{
                         NOME: "",
-                        COR: ""
+                        COR: randomColor
                     }}
                 >
                     {({ values, handleChange, handleSubmit, setFieldValue }) => (
                         <AgendaForm onSubmit={handleSubmit}>
-                            <span style={{gridArea: "AFT"}}>Definições da Agenda</span>
+                            <SpanTitle style={{gridArea: "AFT"}}>Definições da Agenda</SpanTitle>
                 
-                            <Input name={"EVENTO"} type={"text"} placeholder={"Nome da Agenda"} value={values.NOME} onChange={handleChange} autoComplete='off' required={true} style={{gridArea: "AFN"}}/>
+                            <Input name={"NOME"} type={"text"} placeholder={"Nome da Agenda"} value={values.NOME} onChange={handleChange} autoComplete='off' required={true} style={{gridArea: "AFN"}}/>
 
-                            {/* <Select name={"CD_AGENDA"} defaultValue={values.COR} onChange={handleChange} required={true} style={{gridArea: "AFC"}} >
-                                {Agendas.map(item =>
-                                    <Option key={item.CD_AGENDA} value={item.CD_AGENDA as number}>{item.AGENDA}</Option>
+                            <VerticalList idElement='list-colors' style={{gridArea: 'AFC'}}>
+                                {ColorPicker.map(item =>
+                                    <ListItem key={item.id} idElement={item.id} typeItem={'tiColored'} active={values.COR === item.id} colorPrimary={item.id as Colors} onClick={() => setFieldValue("COR", item.id)}>
+                                        {item.id}
+                                    </ListItem>
                                 )}
-                            </Select> */}
+                            </VerticalList>
 
-                            {/* <ButtonCircleDropdown idElement='btn-color-agenda' icon={<FaEyeDropper />} style={{gridArea: "AFC", alignSelf: "center"}}>
-
-                            </ButtonCircleDropdown> */}
-
-                            <VerticalList></VerticalList>
+                            <div style={{gridArea: 'PRW', display: 'flex', marginTop: '10%', justifyContent: 'center', flexWrap: 'wrap'}}>
+                                <span style={{display: 'flex', alignSelf: 'center', justifyContent: 'center', textAlign: 'center'}}>Pré-Visualização</span>
+                                <AgendaItemContainer colorPrimary={Colors.Gray6} colorSecondary={values.COR as Colors} onClick={() => setActivePreview(!activePreview)} active={activePreview}>
+                                    <EventGroup colorPrimary={typeof values.COR === 'undefined' ? Colors.Gray6 : (values.COR as Colors)}></EventGroup>
+                                    <EventTitle>{values.NOME}</EventTitle>
+                                </AgendaItemContainer>
+                            </div>
                         
-                            <button type={"submit"} style={{display: "none"}} ref={submitEventoNovo}></button>
+                            <button type={"submit"} style={{display: "none"}} ref={submitEventoNovo} disabled={values.COR === undefined}></button>
                         </AgendaForm>
                     )}
                 </Formik>
